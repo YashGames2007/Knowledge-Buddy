@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Download, Heart, Star, Code, FileText, BookOpen } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface ProjectCardProps {
+  id: number;
   title: string;
   description: string;
   category: "programming" | "study-material" | "template" | "research";
@@ -30,6 +32,7 @@ const categoryColors = {
 };
 
 const ProjectCard = ({
+  id,
   title,
   description,
   category,
@@ -43,29 +46,30 @@ const ProjectCard = ({
   const IconComponent = categoryIcons[category];
 
   return (
-    <Card className="group hover:shadow-elegant transition-all duration-300 hover:-translate-y-1 bg-card border-border/50">
-      <CardHeader>
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-2 mb-2">
-            <div className={`p-2 rounded-lg ${categoryColors[category]}`}>
-              <IconComponent className="h-4 w-4" />
+    <Link to={`/project/${id}`}>
+      <Card className="group hover:shadow-elegant transition-all duration-300 hover:-translate-y-1 bg-card border-border/50 cursor-pointer">
+        <CardHeader>
+          <div className="flex items-start justify-between">
+            <div className="flex items-center gap-2 mb-2">
+              <div className={`p-2 rounded-lg ${categoryColors[category]}`}>
+                <IconComponent className="h-4 w-4" />
+              </div>
+              <Badge variant="secondary" className="text-xs">
+                {category.replace("-", " ").toUpperCase()}
+              </Badge>
             </div>
-            <Badge variant="secondary" className="text-xs">
-              {category.replace("-", " ").toUpperCase()}
-            </Badge>
+            <div className="flex items-center gap-1 text-warning">
+              <Star className="h-4 w-4 fill-current" />
+              <span className="text-sm font-medium">{rating}</span>
+            </div>
           </div>
-          <div className="flex items-center gap-1 text-warning">
-            <Star className="h-4 w-4 fill-current" />
-            <span className="text-sm font-medium">{rating}</span>
-          </div>
-        </div>
-        <CardTitle className="text-xl group-hover:text-primary transition-colors">
-          {title}
-        </CardTitle>
-        <CardDescription className="text-muted-foreground">
-          {description}
-        </CardDescription>
-      </CardHeader>
+          <CardTitle className="text-xl group-hover:text-primary transition-colors">
+            {title}
+          </CardTitle>
+          <CardDescription className="text-muted-foreground">
+            {description}
+          </CardDescription>
+        </CardHeader>
       
       <CardContent>
         <div className="flex flex-wrap gap-2 mb-4">
@@ -108,6 +112,7 @@ const ProjectCard = ({
         </Button>
       </CardFooter>
     </Card>
+    </Link>
   );
 };
 

@@ -114,6 +114,7 @@ const ProjectsSection = () => {
               {filteredProjects.map((project) => (
                 <ProjectCard
                   key={project.id}
+                  id={project.id}
                   title={project.title}
                   description={project.description}
                   category={project.category}
