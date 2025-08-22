@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { useRazorpay } from "@/hooks/useRazorpay";
 import { useState } from "react";
 
 const ProjectDetails = () => {
   const { id } = useParams();
   const { toast } = useToast();
+  const { initiatePayment } = useRazorpay();
   const [selectedAmount, setSelectedAmount] = useState(99);
 
   // Sample project data - you'll replace this with your actual projects
@@ -123,9 +125,19 @@ const ProjectDetails = () => {
   const contributionAmounts = [99, 199, 299, 499];
 
   const handleContribute = () => {
-    toast({
-      title: "Payment Integration Coming Soon!",
-      description: `Contribute ₹${selectedAmount} for "${project.title}"`,
+    if (!project) return;
+    
+    initiatePayment({
+      amount: selectedAmount,
+      projectId: project.id.toString(),
+      projectTitle: project.title,
+      onSuccess: (paymentId) => {
+        console.log('Payment successful:', paymentId);
+        // You can add additional logic here like updating user's purchased items
+      },
+      onError: (error) => {
+        console.error('Payment failed:', error);
+      }
     });
   };
 
