@@ -18,10 +18,11 @@ serve(async (req) => {
   }
 
   try {
-    const razorpayKey = Deno.env.get('RAZORPAY_API_KEY');
+    const razorpayKeyId = Deno.env.get('RAZORPAY_API_KEY');
+    const razorpayKeySecret = Deno.env.get('RAZORPAY_KEY_SECRET');
     
-    if (!razorpayKey) {
-      throw new Error('Razorpay API key not configured');
+    if (!razorpayKeyId || !razorpayKeySecret) {
+      throw new Error('Razorpay API credentials not configured');
     }
 
     const { amount, projectId, projectTitle }: PaymentRequest = await req.json();
@@ -40,7 +41,7 @@ serve(async (req) => {
     const response = await fetch('https://api.razorpay.com/v1/orders', {
       method: 'POST',
       headers: {
-        'Authorization': `Basic ${btoa(razorpayKey + ':')}`,
+        'Authorization': `Basic ${btoa(razorpayKeyId + ':' + razorpayKeySecret)}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(orderData),
@@ -59,7 +60,7 @@ serve(async (req) => {
         orderId: order.id,
         amount: order.amount,
         currency: order.currency,
-        key: razorpayKey.split('_')[0] + '_' + razorpayKey.split('_')[1] // Return public key part
+        key: razorpayKeyId // Return the key ID for frontend
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
