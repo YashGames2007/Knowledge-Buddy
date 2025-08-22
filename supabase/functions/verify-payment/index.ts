@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createHash } from "https://deno.land/std@0.168.0/crypto/crypto.ts"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -28,11 +27,24 @@ serve(async (req) => {
 
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature }: PaymentVerification = await req.json();
 
-    // Verify signature
+    // Verify signature using Web Crypto API
     const text = razorpay_order_id + "|" + razorpay_payment_id;
-    const expectedSignature = createHash("sha256")
-      .update(text + webhookSecret)
-      .toString("hex");
+    const encoder = new TextEncoder();
+    const keyData = encoder.encode(webhookSecret);
+    const messageData = encoder.encode(text);
+    
+    const cryptoKey = await crypto.subtle.importKey(
+      'raw',
+      keyData,
+      { name: 'HMAC', hash: 'SHA-256' },
+      false,
+      ['sign']
+    );
+    
+    const signature = await crypto.subtle.sign('HMAC', cryptoKey, messageData);
+    const expectedSignature = Array.from(new Uint8Array(signature))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
 
     const isValidSignature = expectedSignature === razorpay_signature;
 
