@@ -72,7 +72,7 @@ export const useRazorpay = () => {
 
             toast({
               title: 'Payment Successful!',
-              description: `Thank you for your contribution of Rs ${options.amount}`,
+              description: `Thank you for your contribution of ${options.amount} Rs`,
               variant: 'default'
             });
 
