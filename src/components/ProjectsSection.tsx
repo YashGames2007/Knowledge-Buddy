@@ -77,10 +77,7 @@ const ProjectsSection = () => {
     : projects.filter(project => project.category === selectedCategory);
 
   const handleContribute = (project: any) => {
-    toast({
-      title: "Payment Integration Coming Soon!",
-      description: `Contribute Rs ${project.suggestedPrice} for "${project.title}"`,
-    });
+    // Remove toast notification to prevent popup on home page
   };
 
   const handleFreeDownload = (project: any) => {
