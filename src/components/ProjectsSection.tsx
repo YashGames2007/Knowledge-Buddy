@@ -79,7 +79,7 @@ const ProjectsSection = () => {
   const handleContribute = (project: any) => {
     toast({
       title: "Payment Integration Coming Soon!",
-      description: `Contribute ₹${project.suggestedPrice} for "${project.title}"`,
+      description: `Contribute Rs ${project.suggestedPrice} for "${project.title}"`,
     });
   };
 

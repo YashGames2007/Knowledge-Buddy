@@ -86,7 +86,7 @@ const ProjectCard = ({
             <span>{downloadCount} downloads</span>
           </div>
           <div className="font-semibold text-primary">
-            ₹{suggestedPrice} suggested
+            Rs {suggestedPrice} suggested
           </div>
         </div>
       </CardContent>
@@ -98,7 +98,7 @@ const ProjectCard = ({
           onClick={onContribute}
         >
           <Heart className="h-4 w-4 mr-2" />
-          Contribute ₹{suggestedPrice}
+          Contribute Rs {suggestedPrice}
         </Button>
         
         <Button 

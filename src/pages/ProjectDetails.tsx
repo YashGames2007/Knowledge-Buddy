@@ -288,7 +288,7 @@ const ProjectDetails = () => {
                             : "border-border hover:border-primary/50"
                         }`}
                       >
-                        ₹{amount}
+                        Rs {amount}
                       </button>
                     ))}
                   </div>
@@ -301,7 +301,7 @@ const ProjectDetails = () => {
                   onClick={handleContribute}
                 >
                   <Heart className="h-4 w-4 mr-2" />
-                  Contribute ₹{selectedAmount}
+                  Contribute Rs {selectedAmount}
                 </Button>
 
                 {/* Free Download - Minimal */}

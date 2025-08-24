@@ -42,7 +42,7 @@ const Hero = () => {
             <div className="text-muted-foreground">Happy Students</div>
           </div>
           <div className="bg-card/50 backdrop-blur-sm p-6 rounded-lg border border-border/50">
-            <div className="text-3xl font-bold text-primary mb-2">₹99</div>
+            <div className="text-3xl font-bold text-primary mb-2">Rs 99</div>
             <div className="text-muted-foreground">Suggested Contribution</div>
           </div>
         </div>
