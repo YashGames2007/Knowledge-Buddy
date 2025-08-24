@@ -133,12 +133,42 @@ const ProjectDetails = () => {
       projectTitle: project.title,
       onSuccess: (paymentId) => {
         console.log('Payment successful:', paymentId);
-        // You can add additional logic here like updating user's purchased items
+        // Start automatic download after successful payment
+        startDownload();
+        // Update toast to show payment and download success
+        toast({
+          title: "Payment Successful!",
+          description: `Thank you for your contribution! Download has started automatically.`,
+        });
       },
       onError: (error) => {
         console.error('Payment failed:', error);
       }
     });
+  };
+
+  const startDownload = () => {
+    // Create a simulated download experience
+    const downloadUrl = `#download-${project.id}`;
+    const fileName = `${project.title.replace(/\s+/g, '_')}.zip`;
+    
+    // Create a temporary download link
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = fileName;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    
+    // Simulate download initiation
+    setTimeout(() => {
+      // In a real app, this would be the actual file URL from your server
+      console.log(`Starting download: ${fileName}`);
+      toast({
+        title: "Download Started",
+        description: `Downloading "${project.title}". Thank you for your support!`,
+      });
+      document.body.removeChild(link);
+    }, 1000);
   };
 
   const handleFreeDownload = () => {
