@@ -18,10 +18,11 @@ serve(async (req) => {
   }
 
   try {
-    const razorpayKey = Deno.env.get('RAZORPAY_API_KEY');
+    const razorpayKeyId = Deno.env.get('RAZORPAY_API_KEY');
+    const razorpayKeySecret = Deno.env.get('RAZORPAY_KEY_SECRET');
     const webhookSecret = Deno.env.get('RAZORPAY_WEBHOOK_SECRET');
     
-    if (!razorpayKey || !webhookSecret) {
+    if (!razorpayKeyId || !razorpayKeySecret || !webhookSecret) {
       throw new Error('Razorpay credentials not configured');
     }
 
@@ -61,7 +62,7 @@ serve(async (req) => {
     // Fetch payment details from Razorpay
     const paymentResponse = await fetch(`https://api.razorpay.com/v1/payments/${razorpay_payment_id}`, {
       headers: {
-        'Authorization': `Basic ${btoa(razorpayKey + ':')}`,
+        'Authorization': `Basic ${btoa(razorpayKeyId + ':' + razorpayKeySecret)}`,
       },
     });
 
