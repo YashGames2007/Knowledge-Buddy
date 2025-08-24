@@ -20,9 +20,8 @@ serve(async (req) => {
   try {
     const razorpayKeyId = Deno.env.get('RAZORPAY_API_KEY');
     const razorpayKeySecret = Deno.env.get('RAZORPAY_KEY_SECRET');
-    const webhookSecret = Deno.env.get('RAZORPAY_WEBHOOK_SECRET');
     
-    if (!razorpayKeyId || !razorpayKeySecret || !webhookSecret) {
+    if (!razorpayKeyId || !razorpayKeySecret) {
       throw new Error('Razorpay credentials not configured');
     }
 
@@ -31,7 +30,7 @@ serve(async (req) => {
     // Verify signature using Web Crypto API
     const text = razorpay_order_id + "|" + razorpay_payment_id;
     const encoder = new TextEncoder();
-    const keyData = encoder.encode(webhookSecret);
+    const keyData = encoder.encode(razorpayKeySecret);
     const messageData = encoder.encode(text);
     
     const cryptoKey = await crypto.subtle.importKey(
