@@ -19,6 +19,7 @@ const ProjectsSection = () => {
       downloadCount: 245,
       rating: 4.8,
       suggestedPrice: 149,
+      driveFileId: "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms",
     },
     {
       id: 2,
@@ -29,6 +30,7 @@ const ProjectsSection = () => {
       downloadCount: 892,
       rating: 4.9,
       suggestedPrice: 99,
+      driveFileId: "1fWJQJnhEPFvKq_pJ8DgJo-tKc8xQx9lm",
     },
     {
       id: 3,
@@ -39,6 +41,7 @@ const ProjectsSection = () => {
       downloadCount: 567,
       rating: 4.7,
       suggestedPrice: 79,
+      driveFileId: "1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p",
     },
     {
       id: 4,
@@ -49,6 +52,7 @@ const ProjectsSection = () => {
       downloadCount: 123,
       rating: 4.6,
       suggestedPrice: 199,
+      driveFileId: "1aBcDeFgHiJkLmNoPqRsTuVwXyZ123456",
     },
     {
       id: 5,
@@ -59,6 +63,7 @@ const ProjectsSection = () => {
       downloadCount: 634,
       rating: 4.8,
       suggestedPrice: 89,
+      driveFileId: "1BcDeFgHiJkLmNoPqRsTuVwXyZ789012",
     },
     {
       id: 6,
@@ -69,6 +74,7 @@ const ProjectsSection = () => {
       downloadCount: 398,
       rating: 4.9,
       suggestedPrice: 299,
+      driveFileId: "1cDeFgHiJkLmNoPqRsTuVwXyZ890123",
     },
   ];
 
@@ -80,10 +86,20 @@ const ProjectsSection = () => {
     // Remove toast notification to prevent popup on home page
   };
 
-  const handleFreeDownload = (project: any) => {
+  const handleFreeDownload = (driveFileId: string, title: string) => {
+    // Create hidden anchor element and trigger download
+    const downloadUrl = `https://drive.google.com/uc?export=download&id=${driveFileId}`;
+    const anchor = document.createElement('a');
+    anchor.href = downloadUrl;
+    anchor.download = title;
+    anchor.style.display = 'none';
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+
     toast({
       title: "Download Started",
-      description: `Downloading "${project.title}" for free. Thank you for your interest!`,
+      description: `Downloading "${title}" for free. Thank you for your interest!`,
     });
   };
 
@@ -119,8 +135,9 @@ const ProjectsSection = () => {
                   downloadCount={project.downloadCount}
                   rating={project.rating}
                   suggestedPrice={project.suggestedPrice}
+                  driveFileId={project.driveFileId}
                   onContribute={() => handleContribute(project)}
-                  onFreeDownload={() => handleFreeDownload(project)}
+                  onFreeDownload={() => handleFreeDownload(project.driveFileId, project.title)}
                 />
               ))}
             </div>

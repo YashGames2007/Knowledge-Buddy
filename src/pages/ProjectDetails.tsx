@@ -26,6 +26,7 @@ const ProjectDetails = () => {
       rating: 4.8,
       suggestedPrice: 99,
       previewImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop&crop=entropy&auto=format",
+      driveFileId: "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms",
     },
     {
       id: 2,
@@ -38,6 +39,7 @@ const ProjectDetails = () => {
       rating: 4.9,
       suggestedPrice: 99,
       previewImage: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=400&fit=crop&crop=entropy&auto=format",
+      driveFileId: "1fWJQJnhEPFvKq_pJ8DgJo-tKc8xQx9lm",
     },
     {
       id: 3,
@@ -50,6 +52,7 @@ const ProjectDetails = () => {
       rating: 4.7,
       suggestedPrice: 99,
       previewImage: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&h=400&fit=crop&crop=entropy&auto=format",
+      driveFileId: "1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p",
     },
     {
       id: 4,
@@ -62,6 +65,7 @@ const ProjectDetails = () => {
       rating: 4.6,
       suggestedPrice: 99,
       previewImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop&crop=entropy&auto=format",
+      driveFileId: "1aBcDeFgHiJkLmNoPqRsTuVwXyZ123456",
     },
     {
       id: 5,
@@ -74,6 +78,7 @@ const ProjectDetails = () => {
       rating: 4.8,
       suggestedPrice: 99,
       previewImage: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&h=400&fit=crop&crop=entropy&auto=format",
+      driveFileId: "1BcDeFgHiJkLmNoPqRsTuVwXyZ789012",
     },
     {
       id: 6,
@@ -86,6 +91,7 @@ const ProjectDetails = () => {
       rating: 4.9,
       suggestedPrice: 99,
       previewImage: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&h=400&fit=crop&crop=entropy&auto=format",
+      driveFileId: "1cDeFgHiJkLmNoPqRsTuVwXyZ890123",
     },
   ];
 
@@ -148,30 +154,32 @@ const ProjectDetails = () => {
   };
 
   const startDownload = () => {
-    // Create a simulated download experience
-    const downloadUrl = `#download-${project.id}`;
-    const fileName = `${project.title.replace(/\s+/g, '_')}.zip`;
+    if (!project.driveFileId) return;
     
-    // Create a temporary download link
-    const link = document.createElement('a');
-    link.href = downloadUrl;
-    link.download = fileName;
-    link.style.display = 'none';
-    document.body.appendChild(link);
-    
-    // Simulate download initiation
-    setTimeout(() => {
-      // In a real app, this would be the actual file URL from your server
-      console.log(`Starting download: ${fileName}`);
-      toast({
-        title: "Download Started",
-        description: `Downloading "${project.title}". Thank you for your support!`,
-      });
-      document.body.removeChild(link);
-    }, 1000);
+    // Create hidden anchor element and trigger download from Google Drive
+    const downloadUrl = `https://drive.google.com/uc?export=download&id=${project.driveFileId}`;
+    const anchor = document.createElement('a');
+    anchor.href = downloadUrl;
+    anchor.download = project.title;
+    anchor.style.display = 'none';
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
   };
 
   const handleFreeDownload = () => {
+    if (!project.driveFileId) return;
+    
+    // Create hidden anchor element and trigger download from Google Drive
+    const downloadUrl = `https://drive.google.com/uc?export=download&id=${project.driveFileId}`;
+    const anchor = document.createElement('a');
+    anchor.href = downloadUrl;
+    anchor.download = project.title;
+    anchor.style.display = 'none';
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+
     toast({
       title: "Download Started",
       description: `Downloading "${project.title}" for free. Thank you for your interest!`,

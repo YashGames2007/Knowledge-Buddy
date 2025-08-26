@@ -13,6 +13,7 @@ interface ProjectCardProps {
   downloadCount: number;
   rating: number;
   suggestedPrice: number;
+  driveFileId: string;
   onContribute: () => void;
   onFreeDownload: () => void;
 }
@@ -40,6 +41,7 @@ const ProjectCard = ({
   downloadCount,
   rating,
   suggestedPrice,
+  driveFileId,
   onContribute,
   onFreeDownload,
 }: ProjectCardProps) => {
