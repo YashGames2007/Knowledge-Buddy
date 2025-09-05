@@ -1,11 +1,14 @@
 import { useState } from "react";
 import ProjectCard from "./ProjectCard";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 
 const ProjectsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
 
   // Sample project data - you'll replace this with your actual projects
@@ -78,9 +81,17 @@ const ProjectsSection = () => {
     },
   ];
 
-  const filteredProjects = selectedCategory === "all" 
-    ? projects 
-    : projects.filter(project => project.category === selectedCategory);
+  const filteredProjects = projects.filter(project => {
+    // Filter by category
+    const categoryMatch = selectedCategory === "all" || project.category === selectedCategory;
+    
+    // Filter by search query (title and description)
+    const searchMatch = searchQuery === "" || 
+      project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.description.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    return categoryMatch && searchMatch;
+  });
 
   const handleContribute = (project: any) => {
     // Remove toast notification to prevent popup on home page
@@ -111,6 +122,18 @@ const ProjectsSection = () => {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Discover high-quality projects, study materials, and templates created during my academic journey
           </p>
+          
+          {/* Search Bar */}
+          <div className="relative max-w-md mx-auto mt-8">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+            <Input
+              type="text"
+              placeholder="Search materials by title or description..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
         </div>
 
         <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="mb-8">
@@ -146,7 +169,12 @@ const ProjectsSection = () => {
 
         {filteredProjects.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-muted-foreground">No projects found in this category.</p>
+            <p className="text-muted-foreground">
+              {searchQuery 
+                ? `No materials found matching "${searchQuery}"`
+                : "No projects found in this category."
+              }
+            </p>
           </div>
         )}
       </div>
