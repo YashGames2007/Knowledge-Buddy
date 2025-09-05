@@ -8,7 +8,7 @@ interface ProjectCardProps {
   id: number;
   title: string;
   description: string;
-  category: "programming" | "study-material" | "template" | "research";
+  category: "project" | "notes" | "misc" | "presentation" | "reference-material";
   tags: string[];
   downloadCount: number;
   rating: number;
@@ -19,17 +19,19 @@ interface ProjectCardProps {
 }
 
 const categoryIcons = {
-  programming: Code,
-  "study-material": BookOpen,
-  template: FileText,
-  research: Star,
+  project: Code,
+  notes: BookOpen,
+  misc: FileText,
+  presentation: Star,
+  "reference-material": Heart,
 };
 
 const categoryColors = {
-  programming: "bg-primary/10 text-primary",
-  "study-material": "bg-accent/10 text-accent",
-  template: "bg-success/10 text-success",
-  research: "bg-warning/10 text-warning",
+  project: "bg-primary/10 text-primary",
+  notes: "bg-accent/10 text-accent",
+  misc: "bg-success/10 text-success",
+  presentation: "bg-warning/10 text-warning",
+  "reference-material": "bg-destructive/10 text-destructive",
 };
 
 const ProjectCard = ({

@@ -17,7 +17,7 @@ const ProjectsSection = () => {
       id: 1,
       title: "React E-commerce Dashboard",
       description: "Complete admin dashboard with React, TypeScript, and modern UI components. Includes authentication, charts, and data management.",
-      category: "programming" as const,
+      category: "project" as const,
       tags: ["React", "TypeScript", "Tailwind", "Vite"],
       downloadCount: 245,
       rating: 4.8,
@@ -28,7 +28,7 @@ const ProjectsSection = () => {
       id: 2,
       title: "Data Structures & Algorithms Notes",
       description: "Comprehensive study material covering all major DSA topics with examples, complexity analysis, and practice problems.",
-      category: "study-material" as const,
+      category: "notes" as const,
       tags: ["DSA", "Programming", "Interview Prep", "PDF"],
       downloadCount: 892,
       rating: 4.9,
@@ -39,7 +39,7 @@ const ProjectsSection = () => {
       id: 3,
       title: "Modern Resume Templates",
       description: "Professional resume templates for CS students and developers. Multiple formats including LaTeX and Word versions.",
-      category: "template" as const,
+      category: "misc" as const,
       tags: ["Resume", "LaTeX", "Word", "Professional"],
       downloadCount: 567,
       rating: 4.7,
@@ -48,10 +48,10 @@ const ProjectsSection = () => {
     },
     {
       id: 4,
-      title: "Machine Learning Research Paper",
-      description: "Original research on neural network optimization techniques. Includes code implementation and detailed analysis.",
-      category: "research" as const,
-      tags: ["ML", "Neural Networks", "Research", "Python"],
+      title: "Machine Learning Presentation",
+      description: "Comprehensive presentation on neural network optimization techniques. Includes detailed slides and code examples.",
+      category: "presentation" as const,
+      tags: ["ML", "Neural Networks", "Presentation", "Python"],
       downloadCount: 123,
       rating: 4.6,
       suggestedPrice: 199,
@@ -59,10 +59,10 @@ const ProjectsSection = () => {
     },
     {
       id: 5,
-      title: "Database Management System Notes",
-      description: "Complete DBMS study material with SQL queries, normalization concepts, and real-world examples.",
-      category: "study-material" as const,
-      tags: ["DBMS", "SQL", "Database", "Study Material"],
+      title: "Database Management System Reference",
+      description: "Complete DBMS reference material with SQL queries, normalization concepts, and real-world examples.",
+      category: "reference-material" as const,
+      tags: ["DBMS", "SQL", "Database", "Reference"],
       downloadCount: 634,
       rating: 4.8,
       suggestedPrice: 89,
@@ -72,7 +72,7 @@ const ProjectsSection = () => {
       id: 6,
       title: "Full-Stack MERN Application",
       description: "Social media platform built with MongoDB, Express, React, and Node.js. Includes authentication and real-time features.",
-      category: "programming" as const,
+      category: "project" as const,
       tags: ["MERN", "MongoDB", "React", "Node.js"],
       downloadCount: 398,
       rating: 4.9,
@@ -137,12 +137,13 @@ const ProjectsSection = () => {
         </div>
 
         <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="mb-8">
-          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-5">
+          <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-6">
             <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="programming">Programming</TabsTrigger>
-            <TabsTrigger value="study-material">Study Material</TabsTrigger>
-            <TabsTrigger value="template">Templates</TabsTrigger>
-            <TabsTrigger value="research">Research</TabsTrigger>
+            <TabsTrigger value="project">Project</TabsTrigger>
+            <TabsTrigger value="notes">Notes</TabsTrigger>
+            <TabsTrigger value="misc">Misc</TabsTrigger>
+            <TabsTrigger value="presentation">Presentation</TabsTrigger>
+            <TabsTrigger value="reference-material">Reference Material</TabsTrigger>
           </TabsList>
 
           <TabsContent value={selectedCategory} className="mt-8">
