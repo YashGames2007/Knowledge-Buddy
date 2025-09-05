@@ -1,86 +1,28 @@
 import { useState } from "react";
 import ProjectCard from "./ProjectCard";
+import RatingDialog from "./RatingDialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
+import { useProjects } from "@/hooks/useProjects";
+import { useDownloads } from "@/hooks/useDownloads";
 
 const ProjectsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [ratingDialog, setRatingDialog] = useState<{
+    isOpen: boolean;
+    projectId: string;
+    projectTitle: string;
+  }>({ isOpen: false, projectId: "", projectTitle: "" });
+  
   const { toast } = useToast();
+  const { projects, loading, error, refetch } = useProjects();
+  const { recordDownload } = useDownloads();
 
-  // Sample project data - you'll replace this with your actual projects
-  const projects = [
-    {
-      id: 1,
-      title: "React E-commerce Dashboard",
-      description: "Complete admin dashboard with React, TypeScript, and modern UI components. Includes authentication, charts, and data management.",
-      category: "project" as const,
-      tags: ["React", "TypeScript", "Tailwind", "Vite"],
-      downloadCount: 245,
-      rating: 4.8,
-      suggestedPrice: 149,
-      driveFileId: "1Cas5WAN2fg7THUwY2_YBbOSnjOng_gNE",
-    },
-    {
-      id: 2,
-      title: "Data Structures & Algorithms Notes",
-      description: "Comprehensive study material covering all major DSA topics with examples, complexity analysis, and practice problems.",
-      category: "notes" as const,
-      tags: ["DSA", "Programming", "Interview Prep", "PDF"],
-      downloadCount: 892,
-      rating: 4.9,
-      suggestedPrice: 99,
-      driveFileId: "1fWJQJnhEPFvKq_pJ8DgJo-tKc8xQx9lm",
-    },
-    {
-      id: 3,
-      title: "Modern Resume Templates",
-      description: "Professional resume templates for CS students and developers. Multiple formats including LaTeX and Word versions.",
-      category: "misc" as const,
-      tags: ["Resume", "LaTeX", "Word", "Professional"],
-      downloadCount: 567,
-      rating: 4.7,
-      suggestedPrice: 79,
-      driveFileId: "1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p",
-    },
-    {
-      id: 4,
-      title: "Machine Learning Presentation",
-      description: "Comprehensive presentation on neural network optimization techniques. Includes detailed slides and code examples.",
-      category: "presentation" as const,
-      tags: ["ML", "Neural Networks", "Presentation", "Python"],
-      downloadCount: 123,
-      rating: 4.6,
-      suggestedPrice: 199,
-      driveFileId: "1aBcDeFgHiJkLmNoPqRsTuVwXyZ123456",
-    },
-    {
-      id: 5,
-      title: "Database Management System Reference",
-      description: "Complete DBMS reference material with SQL queries, normalization concepts, and real-world examples.",
-      category: "reference-material" as const,
-      tags: ["DBMS", "SQL", "Database", "Reference"],
-      downloadCount: 634,
-      rating: 4.8,
-      suggestedPrice: 89,
-      driveFileId: "1BcDeFgHiJkLmNoPqRsTuVwXyZ789012",
-    },
-    {
-      id: 6,
-      title: "Full-Stack MERN Application",
-      description: "Social media platform built with MongoDB, Express, React, and Node.js. Includes authentication and real-time features.",
-      category: "project" as const,
-      tags: ["MERN", "MongoDB", "React", "Node.js"],
-      downloadCount: 398,
-      rating: 4.9,
-      suggestedPrice: 299,
-      driveFileId: "1cDeFgHiJkLmNoPqRsTuVwXyZ890123",
-    },
-  ];
-
+  // Filter projects based on category and search query
   const filteredProjects = projects.filter(project => {
     // Filter by category
     const categoryMatch = selectedCategory === "all" || project.category === selectedCategory;
@@ -97,7 +39,10 @@ const ProjectsSection = () => {
     // Remove toast notification to prevent popup on home page
   };
 
-  const handleFreeDownload = (driveFileId: string, title: string) => {
+  const handleFreeDownload = async (projectId: string, driveFileId: string, title: string) => {
+    // Record the download in database
+    await recordDownload(projectId);
+    
     // Create hidden anchor element and trigger download
     const downloadUrl = `https://drive.google.com/uc?export=download&id=${driveFileId}`;
     const anchor = document.createElement('a');
@@ -112,7 +57,36 @@ const ProjectsSection = () => {
       title: "Download Started",
       description: `Downloading "${title}" for free. Thank you for your interest!`,
     });
+
+    // Show rating dialog after a short delay
+    setTimeout(() => {
+      setRatingDialog({
+        isOpen: true,
+        projectId: projectId,
+        projectTitle: title,
+      });
+    }, 1000);
   };
+
+  if (loading) {
+    return (
+      <section id="projects" className="py-20 px-6 bg-background">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-muted-foreground">Loading projects...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section id="projects" className="py-20 px-6 bg-background">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-destructive">Failed to load projects: {error}</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="projects" className="py-20 px-6 bg-background">
@@ -158,10 +132,10 @@ const ProjectsSection = () => {
                   tags={project.tags}
                   downloadCount={project.downloadCount}
                   rating={project.rating}
-                  suggestedPrice={project.suggestedPrice}
-                  driveFileId={project.driveFileId}
+                  suggestedPrice={project.suggested_price}
+                  driveFileId={project.drive_file_id}
                   onContribute={() => handleContribute(project)}
-                  onFreeDownload={() => handleFreeDownload(project.driveFileId, project.title)}
+                  onFreeDownload={() => handleFreeDownload(project.id, project.drive_file_id, project.title)}
                 />
               ))}
             </div>
@@ -178,6 +152,14 @@ const ProjectsSection = () => {
             </p>
           </div>
         )}
+        
+        <RatingDialog
+          isOpen={ratingDialog.isOpen}
+          onClose={() => setRatingDialog({ isOpen: false, projectId: "", projectTitle: "" })}
+          projectId={ratingDialog.projectId}
+          projectTitle={ratingDialog.projectTitle}
+          onRatingSubmitted={refetch}
+        />
       </div>
     </section>
   );

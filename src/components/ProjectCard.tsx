@@ -5,7 +5,7 @@ import { Download, Heart, Star, Code, FileText, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface ProjectCardProps {
-  id: number;
+  id: string;
   title: string;
   description: string;
   category: "project" | "notes" | "misc" | "presentation" | "reference-material";

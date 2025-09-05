@@ -14,7 +14,103 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      downloads: {
+        Row: {
+          downloaded_at: string
+          id: string
+          project_id: string
+          user_session: string
+        }
+        Insert: {
+          downloaded_at?: string
+          id?: string
+          project_id: string
+          user_session: string
+        }
+        Update: {
+          downloaded_at?: string
+          id?: string
+          project_id?: string
+          user_session?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "downloads_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      projects: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          drive_file_id: string
+          id: string
+          suggested_price: number
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description: string
+          drive_file_id: string
+          id?: string
+          suggested_price?: number
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          drive_file_id?: string
+          id?: string
+          suggested_price?: number
+          tags?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      ratings: {
+        Row: {
+          created_at: string
+          id: string
+          project_id: string
+          rating: number
+          user_session: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          project_id: string
+          rating: number
+          user_session: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          project_id?: string
+          rating?: number
+          user_session?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ratings_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
