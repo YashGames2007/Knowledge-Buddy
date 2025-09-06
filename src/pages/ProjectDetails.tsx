@@ -8,12 +8,14 @@ import { useRazorpay } from "@/hooks/useRazorpay";
 import { useState } from "react";
 import { useProjects } from "@/hooks/useProjects";
 import { useDownloads } from "@/hooks/useDownloads";
+import RatingDialog from "@/components/RatingDialog";
 
 const ProjectDetails = () => {
   const { id } = useParams();
   const { toast } = useToast();
   const { initiatePayment } = useRazorpay();
   const [selectedAmount, setSelectedAmount] = useState(99);
+  const [showRatingDialog, setShowRatingDialog] = useState(false);
   
   const { projects, loading } = useProjects();
   const { recordDownload } = useDownloads();
@@ -79,6 +81,8 @@ const ProjectDetails = () => {
           title: "Payment Successful!",
           description: `Thank you for your contribution! Download has started automatically.`,
         });
+        // Show rating dialog after successful download
+        setTimeout(() => setShowRatingDialog(true), 1000);
       },
       onError: (error) => {
         console.error('Payment failed:', error);
@@ -120,6 +124,9 @@ const ProjectDetails = () => {
       title: "Download Started",
       description: `Downloading "${project.title}" for free. Thank you for your interest!`,
     });
+    
+    // Show rating dialog after free download
+    setTimeout(() => setShowRatingDialog(true), 1000);
   };
 
   return (
@@ -286,6 +293,21 @@ const ProjectDetails = () => {
           </div>
         </div>
       </div>
+      
+      {/* Rating Dialog */}
+      <RatingDialog
+        isOpen={showRatingDialog}
+        onClose={() => setShowRatingDialog(false)}
+        projectId={project.id}
+        projectTitle={project.title}
+        onRatingSubmitted={() => {
+          setShowRatingDialog(false);
+          toast({
+            title: "Thank you!",
+            description: "Your rating helps improve our resources.",
+          });
+        }}
+      />
     </div>
   );
 };
