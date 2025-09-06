@@ -31,7 +31,7 @@ serve(async (req) => {
     const orderData = {
       amount: amount * 100, // Convert to paise
       currency: 'INR',
-      receipt: `receipt_${projectId}_${Date.now()}`,
+      receipt: `rcpt_${Date.now()}`, // Keep under 40 chars limit
       notes: {
         project_id: projectId,
         project_title: projectTitle
