@@ -6,96 +6,27 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useRazorpay } from "@/hooks/useRazorpay";
 import { useState } from "react";
+import { useProjects } from "@/hooks/useProjects";
+import { useDownloads } from "@/hooks/useDownloads";
 
 const ProjectDetails = () => {
   const { id } = useParams();
   const { toast } = useToast();
   const { initiatePayment } = useRazorpay();
   const [selectedAmount, setSelectedAmount] = useState(99);
+  
+  const { projects, loading } = useProjects();
+  const { recordDownload } = useDownloads();
 
-  // Sample project data - you'll replace this with your actual projects
-  const projects = [
-    {
-      id: 1,
-      title: "React E-commerce Dashboard",
-      description: "Complete admin dashboard with React, TypeScript, and modern UI components. Includes authentication, charts, and data management.",
-      fullDescription: "This comprehensive e-commerce dashboard is built with modern React patterns and TypeScript for type safety. Features include user authentication, dynamic charts using Recharts, responsive design with Tailwind CSS, and efficient state management. The dashboard includes modules for product management, order tracking, user analytics, and sales reporting. Perfect for learning full-stack development or as a starting point for your own e-commerce project.",
-      category: "programming" as const,
-      tags: ["React", "TypeScript", "Tailwind", "Vite"],
-      downloadCount: 245,
-      rating: 4.8,
-      suggestedPrice: 99,
-      previewImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop&crop=entropy&auto=format",
-      driveFileId: "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms",
-    },
-    {
-      id: 2,
-      title: "Data Structures & Algorithms Notes",
-      description: "Comprehensive study material covering all major DSA topics with examples, complexity analysis, and practice problems.",
-      fullDescription: "Complete DSA study material designed for computer science students and interview preparation. Covers arrays, linked lists, stacks, queues, trees, graphs, sorting algorithms, searching algorithms, dynamic programming, and more. Each topic includes detailed explanations, code examples in multiple languages, time/space complexity analysis, and practice problems with solutions.",
-      category: "study-material" as const,
-      tags: ["DSA", "Programming", "Interview Prep", "PDF"],
-      downloadCount: 892,
-      rating: 4.9,
-      suggestedPrice: 99,
-      previewImage: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=400&fit=crop&crop=entropy&auto=format",
-      driveFileId: "1fWJQJnhEPFvKq_pJ8DgJo-tKc8xQx9lm",
-    },
-    {
-      id: 3,
-      title: "Modern Resume Templates",
-      description: "Professional resume templates for CS students and developers. Multiple formats including LaTeX and Word versions.",
-      fullDescription: "Collection of 5 professionally designed resume templates specifically crafted for computer science students and software developers. Includes both LaTeX source files for precise formatting and Word versions for easy editing. Templates feature modern typography, clean layouts, and sections optimized for technical roles. Comes with detailed customization guide and tips for highlighting technical skills.",
-      category: "template" as const,
-      tags: ["Resume", "LaTeX", "Word", "Professional"],
-      downloadCount: 567,
-      rating: 4.7,
-      suggestedPrice: 99,
-      previewImage: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&h=400&fit=crop&crop=entropy&auto=format",
-      driveFileId: "1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p",
-    },
-    {
-      id: 4,
-      title: "Machine Learning Research Paper",
-      description: "Original research on neural network optimization techniques. Includes code implementation and detailed analysis.",
-      fullDescription: "Original research paper exploring novel optimization techniques for deep neural networks. The paper presents a comprehensive analysis of gradient descent variants and proposes an adaptive learning rate algorithm. Includes complete Python implementation using PyTorch, experimental results on standard datasets, and detailed mathematical derivations. Valuable for ML researchers and advanced students.",
-      category: "research" as const,
-      tags: ["ML", "Neural Networks", "Research", "Python"],
-      downloadCount: 123,
-      rating: 4.6,
-      suggestedPrice: 99,
-      previewImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop&crop=entropy&auto=format",
-      driveFileId: "1aBcDeFgHiJkLmNoPqRsTuVwXyZ123456",
-    },
-    {
-      id: 5,
-      title: "Database Management System Notes",
-      description: "Complete DBMS study material with SQL queries, normalization concepts, and real-world examples.",
-      fullDescription: "Comprehensive DBMS study material covering relational database concepts, SQL programming, database design principles, normalization techniques, transaction management, and indexing strategies. Includes practical exercises, real-world case studies, and sample database schemas. Perfect for database courses and interview preparation.",
-      category: "study-material" as const,
-      tags: ["DBMS", "SQL", "Database", "Study Material"],
-      downloadCount: 634,
-      rating: 4.8,
-      suggestedPrice: 99,
-      previewImage: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&h=400&fit=crop&crop=entropy&auto=format",
-      driveFileId: "1BcDeFgHiJkLmNoPqRsTuVwXyZ789012",
-    },
-    {
-      id: 6,
-      title: "Full-Stack MERN Application",
-      description: "Social media platform built with MongoDB, Express, React, and Node.js. Includes authentication and real-time features.",
-      fullDescription: "Complete social media platform built with the MERN stack (MongoDB, Express.js, React, Node.js). Features include user authentication with JWT, real-time messaging using Socket.io, image upload with Cloudinary, responsive design, post creation and interaction, user profiles, and friend connections. Includes deployment guides for Heroku and Netlify.",
-      category: "programming" as const,
-      tags: ["MERN", "MongoDB", "React", "Node.js"],
-      downloadCount: 398,
-      rating: 4.9,
-      suggestedPrice: 99,
-      previewImage: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&h=400&fit=crop&crop=entropy&auto=format",
-      driveFileId: "1cDeFgHiJkLmNoPqRsTuVwXyZ890123",
-    },
-  ];
+  const project = projects.find(p => p.id === id);
 
-  const project = projects.find(p => p.id === parseInt(id || ""));
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-muted-foreground">Loading project...</p>
+      </div>
+    );
+  }
 
   if (!project) {
     return (
@@ -114,17 +45,19 @@ const ProjectDetails = () => {
   }
 
   const categoryIcons = {
-    programming: Code,
-    "study-material": BookOpen,
-    template: FileText,
-    research: Star,
+    project: Code,
+    notes: BookOpen,
+    misc: FileText,
+    presentation: Star,
+    "reference-material": Heart,
   };
 
   const categoryColors = {
-    programming: "bg-primary/10 text-primary",
-    "study-material": "bg-accent/10 text-accent",
-    template: "bg-success/10 text-success",
-    research: "bg-warning/10 text-warning",
+    project: "bg-primary/10 text-primary",
+    notes: "bg-accent/10 text-accent",
+    misc: "bg-success/10 text-success",
+    presentation: "bg-warning/10 text-warning",
+    "reference-material": "bg-destructive/10 text-destructive",
   };
 
   const IconComponent = categoryIcons[project.category];
@@ -154,10 +87,10 @@ const ProjectDetails = () => {
   };
 
   const startDownload = () => {
-    if (!project.driveFileId) return;
+    if (!project.drive_file_id) return;
     
     // Create hidden anchor element and trigger download from Google Drive
-    const downloadUrl = `https://drive.google.com/uc?export=download&id=${project.driveFileId}`;
+    const downloadUrl = `https://drive.google.com/uc?export=download&id=${project.drive_file_id}`;
     const anchor = document.createElement('a');
     anchor.href = downloadUrl;
     anchor.download = project.title;
@@ -167,11 +100,14 @@ const ProjectDetails = () => {
     document.body.removeChild(anchor);
   };
 
-  const handleFreeDownload = () => {
-    if (!project.driveFileId) return;
+  const handleFreeDownload = async () => {
+    if (!project.drive_file_id) return;
+    
+    // Record the download in database
+    await recordDownload(project.id);
     
     // Create hidden anchor element and trigger download from Google Drive
-    const downloadUrl = `https://drive.google.com/uc?export=download&id=${project.driveFileId}`;
+    const downloadUrl = `https://drive.google.com/uc?export=download&id=${project.drive_file_id}`;
     const anchor = document.createElement('a');
     anchor.href = downloadUrl;
     anchor.download = project.title;
@@ -234,15 +170,10 @@ const ProjectDetails = () => {
             <Card>
               <CardContent className="p-0">
                 <div className="relative aspect-video rounded-lg overflow-hidden bg-muted">
-                  <img 
-                    src={project.previewImage} 
-                    alt={`${project.title} preview`}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                    <div className="bg-black/50 rounded-lg p-3 flex items-center gap-2 text-white">
-                      <ImageIcon className="h-5 w-5" />
-                      <span>Preview Image</span>
+                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                    <div className="text-center">
+                      <ImageIcon className="h-12 w-12 mx-auto text-muted-foreground mb-2" />
+                      <p className="text-muted-foreground">Preview image coming soon</p>
                     </div>
                   </div>
                 </div>
@@ -256,7 +187,7 @@ const ProjectDetails = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  {project.fullDescription}
+                  {project.description}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (

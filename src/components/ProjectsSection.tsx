@@ -35,37 +35,12 @@ const ProjectsSection = () => {
     return categoryMatch && searchMatch;
   });
 
-  const handleContribute = (project: any) => {
-    // Remove toast notification to prevent popup on home page
-  };
-
-  const handleFreeDownload = async (projectId: string, driveFileId: string, title: string) => {
+  const handleCardClick = async (project: any) => {
     // Record the download in database
-    await recordDownload(projectId);
+    await recordDownload(project.id);
     
-    // Create hidden anchor element and trigger download
-    const downloadUrl = `https://drive.google.com/uc?export=download&id=${driveFileId}`;
-    const anchor = document.createElement('a');
-    anchor.href = downloadUrl;
-    anchor.download = title;
-    anchor.style.display = 'none';
-    document.body.appendChild(anchor);
-    anchor.click();
-    document.body.removeChild(anchor);
-
-    toast({
-      title: "Download Started",
-      description: `Downloading "${title}" for free. Thank you for your interest!`,
-    });
-
-    // Show rating dialog after a short delay
-    setTimeout(() => {
-      setRatingDialog({
-        isOpen: true,
-        projectId: projectId,
-        projectTitle: title,
-      });
-    }, 1000);
+    // Navigate to project details page
+    window.location.href = `/project/${project.id}`;
   };
 
   if (loading) {
@@ -134,8 +109,7 @@ const ProjectsSection = () => {
                   rating={project.rating}
                   suggestedPrice={project.suggested_price}
                   driveFileId={project.drive_file_id}
-                  onContribute={() => handleContribute(project)}
-                  onFreeDownload={() => handleFreeDownload(project.id, project.drive_file_id, project.title)}
+                  onCardClick={() => handleCardClick(project)}
                 />
               ))}
             </div>

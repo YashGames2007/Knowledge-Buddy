@@ -14,8 +14,7 @@ interface ProjectCardProps {
   rating: number;
   suggestedPrice: number;
   driveFileId: string;
-  onContribute: () => void;
-  onFreeDownload: () => void;
+  onCardClick: () => void;
 }
 
 const categoryIcons = {
@@ -44,79 +43,66 @@ const ProjectCard = ({
   rating,
   suggestedPrice,
   driveFileId,
-  onContribute,
-  onFreeDownload,
+  onCardClick,
 }: ProjectCardProps) => {
   const IconComponent = categoryIcons[category];
 
   return (
-    <Link to={`/project/${id}`}>
-      <Card className="group hover:shadow-elegant transition-all duration-300 hover:-translate-y-1 bg-card border-border/50 cursor-pointer">
-        <CardHeader>
-          <div className="flex items-start justify-between">
-            <div className="flex items-center gap-2 mb-2">
-              <div className={`p-2 rounded-lg ${categoryColors[category]}`}>
-                <IconComponent className="h-4 w-4" />
-              </div>
-              <Badge variant="secondary" className="text-xs">
-                {category.replace("-", " ").toUpperCase()}
-              </Badge>
+    <Card className="group hover:shadow-elegant transition-all duration-300 hover:-translate-y-1 bg-card border-border/50 cursor-pointer">
+      <CardHeader>
+        <div className="flex items-start justify-between">
+          <div className="flex items-center gap-2 mb-2">
+            <div className={`p-2 rounded-lg ${categoryColors[category]}`}>
+              <IconComponent className="h-4 w-4" />
             </div>
-            <div className="flex items-center gap-1 text-warning">
-              <Star className="h-4 w-4 fill-current" />
-              <span className="text-sm font-medium">{rating}</span>
-            </div>
-          </div>
-          <CardTitle className="text-xl group-hover:text-primary transition-colors">
-            {title}
-          </CardTitle>
-          <CardDescription className="text-muted-foreground">
-            {description}
-          </CardDescription>
-        </CardHeader>
-      
-      <CardContent>
-        <div className="flex flex-wrap gap-2 mb-4">
-          {tags.map((tag) => (
-            <Badge key={tag} variant="outline" className="text-xs">
-              {tag}
+            <Badge variant="secondary" className="text-xs">
+              {category.replace("-", " ").toUpperCase()}
             </Badge>
-          ))}
-        </div>
-        
-        <div className="flex items-center justify-between text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <Download className="h-4 w-4" />
-            <span>{downloadCount} downloads</span>
           </div>
-          <div className="font-semibold text-primary">
-            {suggestedPrice} Rs suggested
+          <div className="flex items-center gap-1 text-warning">
+            <Star className="h-4 w-4 fill-current" />
+            <span className="text-sm font-medium">{rating}</span>
           </div>
         </div>
-      </CardContent>
+        <CardTitle className="text-xl group-hover:text-primary transition-colors">
+          {title}
+        </CardTitle>
+        <CardDescription className="text-muted-foreground">
+          {description}
+        </CardDescription>
+      </CardHeader>
+    
+    <CardContent>
+      <div className="flex flex-wrap gap-2 mb-4">
+        {tags.map((tag) => (
+          <Badge key={tag} variant="outline" className="text-xs">
+            {tag}
+          </Badge>
+        ))}
+      </div>
       
-      <CardFooter className="flex flex-col gap-3">
-        <Button 
-          variant="contribute" 
-          className="w-full"
-          onClick={onContribute}
-        >
-          <Heart className="h-4 w-4 mr-2" />
-          Contribute {suggestedPrice} Rs
-        </Button>
-        
-        <Button 
-          variant="download" 
-          size="sm" 
-          className="w-full text-xs"
-          onClick={onFreeDownload}
-        >
-          <Download className="h-3 w-3 mr-2" />
-          Download for Free
-        </Button>
-      </CardFooter>
-    </Card>
-    </Link>
+      <div className="flex items-center justify-between text-sm text-muted-foreground">
+        <div className="flex items-center gap-1">
+          <Download className="h-4 w-4" />
+          <span>{downloadCount} downloads</span>
+        </div>
+        <div className="font-semibold text-primary">
+          {suggestedPrice} Rs suggested
+        </div>
+      </div>
+    </CardContent>
+    
+    <CardFooter>
+      <Button 
+        variant="default" 
+        className="w-full"
+        onClick={onCardClick}
+      >
+        <Download className="h-4 w-4 mr-2" />
+        View Details
+      </Button>
+    </CardFooter>
+  </Card>
   );
 };
 
