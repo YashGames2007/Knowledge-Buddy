@@ -21,8 +21,16 @@ serve(async (req) => {
     const razorpayKeyId = Deno.env.get('RAZORPAY_API_KEY');
     const razorpayKeySecret = Deno.env.get('RAZORPAY_KEY_SECRET');
     
+    console.log('Checking Razorpay credentials...');
+    console.log('API Key present:', !!razorpayKeyId);
+    console.log('Secret present:', !!razorpayKeySecret);
+    
     if (!razorpayKeyId || !razorpayKeySecret) {
-      throw new Error('Razorpay API credentials not configured');
+      console.error('Missing Razorpay credentials:', {
+        keyId: !!razorpayKeyId,
+        secret: !!razorpayKeySecret
+      });
+      throw new Error('Razorpay API credentials not configured. Please set RAZORPAY_API_KEY and RAZORPAY_KEY_SECRET in Supabase secrets.');
     }
 
     const { amount, projectId, projectTitle }: PaymentRequest = await req.json();
