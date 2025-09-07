@@ -48,7 +48,10 @@ const ProjectCard = ({
   const IconComponent = categoryIcons[category];
 
   return (
-    <Card className="group hover:shadow-elegant transition-all duration-300 hover:-translate-y-1 bg-card border-border/50 cursor-pointer">
+    <Card 
+      className="group hover:shadow-elegant transition-all duration-300 hover:-translate-y-1 bg-card border-border/50 cursor-pointer"
+      onClick={onCardClick}
+    >
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2 mb-2">
@@ -72,37 +75,33 @@ const ProjectCard = ({
         </CardDescription>
       </CardHeader>
     
-    <CardContent>
-      <div className="flex flex-wrap gap-2 mb-4">
-        {tags.map((tag) => (
-          <Badge key={tag} variant="outline" className="text-xs">
-            {tag}
-          </Badge>
-        ))}
-      </div>
+      <CardContent>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {tags.map((tag) => (
+            <Badge key={tag} variant="outline" className="text-xs">
+              {tag}
+            </Badge>
+          ))}
+        </div>
+        
+        <div className="flex items-center justify-between text-sm text-muted-foreground">
+          <div className="flex items-center gap-1">
+            <Download className="h-4 w-4" />
+            <span>{downloadCount} downloads</span>
+          </div>
+          <div className="font-semibold text-primary">
+            {suggestedPrice} Rs suggested
+          </div>
+        </div>
+      </CardContent>
       
-      <div className="flex items-center justify-between text-sm text-muted-foreground">
-        <div className="flex items-center gap-1">
-          <Download className="h-4 w-4" />
-          <span>{downloadCount} downloads</span>
+      <CardFooter>
+        <div className="w-full text-center text-sm text-muted-foreground group-hover:text-primary transition-colors">
+          <Download className="h-4 w-4 mr-2 inline" />
+          Click to view details
         </div>
-        <div className="font-semibold text-primary">
-          {suggestedPrice} Rs suggested
-        </div>
-      </div>
-    </CardContent>
-    
-    <CardFooter>
-      <Button 
-        variant="default" 
-        className="w-full"
-        onClick={onCardClick}
-      >
-        <Download className="h-4 w-4 mr-2" />
-        View Details
-      </Button>
-    </CardFooter>
-  </Card>
+      </CardFooter>
+    </Card>
   );
 };
 
