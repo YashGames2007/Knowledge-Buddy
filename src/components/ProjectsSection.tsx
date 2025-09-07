@@ -7,7 +7,7 @@ import { Search } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useProjects } from "@/hooks/useProjects";
-import { useDownloads } from "@/hooks/useDownloads";
+
 
 const ProjectsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -20,7 +20,7 @@ const ProjectsSection = () => {
   
   const { toast } = useToast();
   const { projects, loading, error, refetch } = useProjects();
-  const { recordDownload } = useDownloads();
+  
 
   // Filter projects based on category and search query
   const filteredProjects = projects.filter(project => {
@@ -35,11 +35,8 @@ const ProjectsSection = () => {
     return categoryMatch && searchMatch;
   });
 
-  const handleCardClick = async (project: any) => {
-    // Record the download in database
-    await recordDownload(project.id);
-    
-    // Navigate to project details page
+  const handleCardClick = (project: any) => {
+    // Navigate to project details page without recording download
     window.location.href = `/project/${project.id}`;
   };
 
