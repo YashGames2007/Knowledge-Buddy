@@ -17,7 +17,7 @@ const ProjectDetails = () => {
   const [selectedAmount, setSelectedAmount] = useState(99);
   const [showRatingDialog, setShowRatingDialog] = useState(false);
   
-  const { projects, loading } = useProjects();
+  const { projects, loading, refetch } = useProjects();
   const { recordDownload } = useDownloads();
 
   const project = projects.find(p => p.id === id);
@@ -90,8 +90,11 @@ const ProjectDetails = () => {
     });
   };
 
-  const startDownload = () => {
+  const startDownload = async () => {
     if (!project.drive_file_id) return;
+    
+    // Record the download in database
+    await recordDownload(project.id);
     
     // Create hidden anchor element and trigger download from Google Drive
     const downloadUrl = `https://drive.google.com/uc?export=download&id=${project.drive_file_id}`;
@@ -102,6 +105,9 @@ const ProjectDetails = () => {
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);
+    
+    // Refresh project data to update download count
+    refetch();
   };
 
   const handleFreeDownload = async () => {
@@ -124,6 +130,9 @@ const ProjectDetails = () => {
       title: "Download Started",
       description: `Downloading "${project.title}" for free. Thank you for your interest!`,
     });
+    
+    // Refresh project data to update download count
+    refetch();
     
     // Show rating dialog after free download
     setTimeout(() => setShowRatingDialog(true), 1000);
@@ -302,6 +311,8 @@ const ProjectDetails = () => {
         projectTitle={project.title}
         onRatingSubmitted={() => {
           setShowRatingDialog(false);
+          // Refresh project data to update rating
+          refetch();
           toast({
             title: "Thank you!",
             description: "Your rating helps improve our resources.",
