@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ProjectCard from "./ProjectCard";
 import RatingDialog from "./RatingDialog";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,7 @@ const ProjectsSection = () => {
     projectTitle: string;
   }>({ isOpen: false, projectId: "", projectTitle: "" });
   
+  const navigate = useNavigate();
   const { toast } = useToast();
   const { projects, loading, error, refetch } = useProjects();
   
@@ -36,8 +38,8 @@ const ProjectsSection = () => {
   });
 
   const handleCardClick = (project: any) => {
-    // Navigate to project details page without recording download
-    window.location.href = `/project/${project.id}`;
+    // Navigate to project details page using React Router
+    navigate(`/project/${project.id}`);
   };
 
   if (loading) {
