@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useProjects } from "@/hooks/useProjects";
 import { useDownloads } from "@/hooks/useDownloads";
 import RatingDialog from "@/components/RatingDialog";
+import ContributionDialog from "@/components/ContributionDialog";
 
 const ProjectDetails = () => {
   const { id } = useParams();
@@ -16,6 +17,7 @@ const ProjectDetails = () => {
   const { initiatePayment } = useRazorpay();
   const [selectedAmount, setSelectedAmount] = useState(99);
   const [showRatingDialog, setShowRatingDialog] = useState(false);
+  const [showContributionDialog, setShowContributionDialog] = useState(false);
   
   const { projects, loading, refetch } = useProjects();
   const { recordDownload } = useDownloads();
@@ -65,11 +67,13 @@ const ProjectDetails = () => {
   const IconComponent = categoryIcons[project.category];
   const contributionAmounts = [99, 199, 299, 499];
 
-  const handleContribute = () => {
+  const handleContribute = (amount?: number) => {
     if (!project) return;
     
+    const contributionAmount = amount || selectedAmount;
+    
     initiatePayment({
-      amount: selectedAmount,
+      amount: contributionAmount,
       projectId: project.id.toString(),
       projectTitle: project.title,
       onSuccess: (paymentId) => {
@@ -111,6 +115,11 @@ const ProjectDetails = () => {
   };
 
   const handleFreeDownload = async () => {
+    // Show contribution dialog instead of directly downloading
+    setShowContributionDialog(true);
+  };
+
+  const handleActualFreeDownload = async () => {
     if (!project.drive_file_id) return;
     
     // Record the download in database
@@ -253,7 +262,7 @@ const ProjectDetails = () => {
                 <Button 
                   variant="contribute" 
                   className="w-full"
-                  onClick={handleContribute}
+                  onClick={() => handleContribute()}
                 >
                   <Heart className="h-4 w-4 mr-2" />
                   Contribute {selectedAmount} Rs
@@ -318,6 +327,15 @@ const ProjectDetails = () => {
             description: "Your rating helps improve our resources.",
           });
         }}
+      />
+
+      {/* Contribution Dialog */}
+      <ContributionDialog
+        isOpen={showContributionDialog}
+        onClose={() => setShowContributionDialog(false)}
+        onContribute={handleContribute}
+        onFreeDownload={handleActualFreeDownload}
+        projectTitle={project.title}
       />
     </div>
   );
