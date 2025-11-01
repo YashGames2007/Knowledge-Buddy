@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Dialog,
   DialogContent,
@@ -10,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Star } from 'lucide-react';
 import { useRatings } from '@/hooks/useRatings';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
 
 interface RatingDialogProps {
   isOpen: boolean;
@@ -31,8 +33,21 @@ const RatingDialog = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { submitRating } = useRatings();
   const { toast } = useToast();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmitRating = async () => {
+    if (!user) {
+      toast({
+        title: "Sign in required",
+        description: "Please sign in to rate projects.",
+        variant: "destructive",
+      });
+      navigate('/auth');
+      onClose();
+      return;
+    }
+
     if (selectedRating === 0) {
       toast({
         title: "Please select a rating",
@@ -55,7 +70,7 @@ const RatingDialog = ({
     } else {
       toast({
         title: "Failed to submit rating",
-        description: "Please try again later.",
+        description: "Please sign in to rate projects.",
         variant: "destructive",
       });
     }

@@ -19,18 +19,21 @@ export type Database = {
           downloaded_at: string
           id: string
           project_id: string
+          user_id: string | null
           user_session: string
         }
         Insert: {
           downloaded_at?: string
           id?: string
           project_id: string
+          user_id?: string | null
           user_session: string
         }
         Update: {
           downloaded_at?: string
           id?: string
           project_id?: string
+          user_id?: string | null
           user_session?: string
         }
         Relationships: [
@@ -88,6 +91,7 @@ export type Database = {
           id: string
           project_id: string
           rating: number
+          user_id: string | null
           user_session: string
         }
         Insert: {
@@ -95,6 +99,7 @@ export type Database = {
           id?: string
           project_id: string
           rating: number
+          user_id?: string | null
           user_session: string
         }
         Update: {
@@ -102,6 +107,7 @@ export type Database = {
           id?: string
           project_id?: string
           rating?: number
+          user_id?: string | null
           user_session?: string
         }
         Relationships: [

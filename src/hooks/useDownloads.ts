@@ -1,26 +1,20 @@
 import { supabase } from '@/integrations/supabase/client';
 
-// Generate a simple session ID for tracking without auth
-const getSessionId = () => {
-  let sessionId = localStorage.getItem('user_session_id');
-  if (!sessionId) {
-    sessionId = 'user_' + Math.random().toString(36).substr(2, 9);
-    localStorage.setItem('user_session_id', sessionId);
-  }
-  return sessionId;
-};
-
 export const useDownloads = () => {
   const recordDownload = async (projectId: string) => {
     try {
-      const sessionId = getSessionId();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error('You must be signed in to download projects');
+      }
       
       const { error } = await supabase
         .from('downloads')
         .insert([
           {
             project_id: projectId,
-            user_session: sessionId,
+            user_id: user.id,
+            user_session: '', // Legacy field, now using user_id
           }
         ]);
 

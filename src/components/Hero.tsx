@@ -1,7 +1,12 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { LogIn, LogOut, User } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const Hero = () => {
+  const { user, signOut } = useAuth();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-subtle overflow-hidden">
       {/* Background Image */}
@@ -9,6 +14,29 @@ const Hero = () => {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
         style={{ backgroundImage: `url(${heroBg})` }}
       />
+      
+      {/* Auth Button - Top Right */}
+      <div className="absolute top-6 right-6 z-20">
+        {user ? (
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-muted-foreground hidden sm:inline">
+              <User className="inline h-4 w-4 mr-1" />
+              {user.email}
+            </span>
+            <Button variant="outline" size="sm" onClick={signOut}>
+              <LogOut className="h-4 w-4 mr-2" />
+              Sign Out
+            </Button>
+          </div>
+        ) : (
+          <Button variant="outline" size="sm" asChild>
+            <Link to="/auth">
+              <LogIn className="h-4 w-4 mr-2" />
+              Sign In
+            </Link>
+          </Button>
+        )}
+      </div>
       
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
