@@ -38,7 +38,7 @@ const ContributionDialog = ({
           <div className="flex justify-center mb-3">
             <div className="text-5xl sm:text-6xl">😢</div>
           </div>
-          <DialogTitle className="text-lg sm:text-xl font-bold">
+          <DialogTitle className="text-lg sm:text-xl font-bold text-center">
             Wait! Your support means everything
           </DialogTitle>
           <DialogDescription className="text-center space-y-2">
