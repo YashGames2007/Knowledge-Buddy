@@ -1,15 +1,24 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-interface PaymentRequest {
-  amount: number;
-  projectId: string;
-  projectTitle: string;
-}
+const PaymentRequestSchema = z.object({
+  amount: z.number()
+    .int('Amount must be an integer')
+    .min(1, 'Amount must be at least 1 Rs')
+    .max(100000, 'Amount cannot exceed 100,000 Rs'),
+  projectId: z.string()
+    .uuid('Invalid project ID format'),
+  projectTitle: z.string()
+    .min(1, 'Project title is required')
+    .max(200, 'Project title too long')
+    .trim()
+})
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -21,19 +30,37 @@ serve(async (req) => {
     const razorpayKeyId = Deno.env.get('RAZORPAY_API_KEY');
     const razorpayKeySecret = Deno.env.get('RAZORPAY_KEY_SECRET');
     
-    console.log('Checking Razorpay credentials...');
-    console.log('API Key present:', !!razorpayKeyId);
-    console.log('Secret present:', !!razorpayKeySecret);
-    
     if (!razorpayKeyId || !razorpayKeySecret) {
-      console.error('Missing Razorpay credentials:', {
-        keyId: !!razorpayKeyId,
-        secret: !!razorpayKeySecret
-      });
-      throw new Error('Razorpay API credentials not configured. Please set RAZORPAY_API_KEY and RAZORPAY_KEY_SECRET in Supabase secrets.');
+      throw new Error('Payment system not configured');
     }
 
-    const { amount, projectId, projectTitle }: PaymentRequest = await req.json();
+    // Parse and validate input
+    const rawData = await req.json();
+    const validated = PaymentRequestSchema.parse(rawData);
+    
+    // Verify project exists in database
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    );
+    
+    const { data: project, error: projectError } = await supabase
+      .from('projects')
+      .select('id, title')
+      .eq('id', validated.projectId)
+      .single();
+    
+    if (projectError || !project) {
+      return new Response(
+        JSON.stringify({ error: 'Project not found' }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 404,
+        },
+      );
+    }
+
+    const { amount, projectId, projectTitle } = validated;
 
     // Create Razorpay order
     const orderData = {
@@ -56,9 +83,11 @@ serve(async (req) => {
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Razorpay API error:', errorText);
-      throw new Error(`Failed to create Razorpay order: ${response.status}`);
+      console.error('Razorpay order creation failed', {
+        status: response.status,
+        project: projectId
+      });
+      throw new Error(`Failed to create payment order`);
     }
 
     const order = await response.json();
@@ -77,10 +106,28 @@ serve(async (req) => {
     )
 
   } catch (error) {
-    console.error('Error in create-payment function:', error);
+    // Handle validation errors
+    if (error instanceof z.ZodError) {
+      return new Response(
+        JSON.stringify({ 
+          error: 'Invalid input',
+          details: error.errors
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400,
+        },
+      );
+    }
+    
+    console.error('Payment error:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      timestamp: new Date().toISOString()
+    });
+    
     return new Response(
       JSON.stringify({ 
-        error: error.message || 'Failed to create payment order' 
+        error: error instanceof Error ? error.message : 'Payment system error'
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

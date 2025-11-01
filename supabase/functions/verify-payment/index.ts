@@ -89,10 +89,14 @@ serve(async (req) => {
     )
 
   } catch (error) {
-    console.error('Error in verify-payment function:', error);
+    console.error('Payment verification error:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      timestamp: new Date().toISOString()
+    });
+    
     return new Response(
       JSON.stringify({ 
-        error: error.message || 'Payment verification failed' 
+        error: error instanceof Error ? error.message : 'Payment verification failed'
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
