@@ -107,7 +107,7 @@ const ContributionDialog = ({
               <Download className="h-3 w-3 mr-2" />
               I'll download for free this time...
             </Button>
-            <p className="text-center text-xs text-muted-foreground/40 mt-1 sm:mt-2">
+            <p className="text-center text-xs text-muted-foreground/60 mt-1 sm:mt-2">
               (But maybe consider contributing next time? 🥺)
             </p>
           </div>
