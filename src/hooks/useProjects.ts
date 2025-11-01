@@ -9,6 +9,7 @@ interface Project {
   tags: string[];
   suggested_price: number;
   drive_file_id: string;
+  thumbnail_url?: string;
   created_at: string;
   updated_at: string;
 }

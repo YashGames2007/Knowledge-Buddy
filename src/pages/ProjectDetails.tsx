@@ -195,12 +195,20 @@ const ProjectDetails = () => {
             <Card>
               <CardContent className="p-0">
                 <div className="relative aspect-video rounded-lg overflow-hidden bg-muted">
-                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                    <div className="text-center">
-                      <ImageIcon className="h-12 w-12 mx-auto text-muted-foreground mb-2" />
-                      <p className="text-muted-foreground">Preview image coming soon</p>
+                  {project.thumbnail_url ? (
+                    <img 
+                      src={project.thumbnail_url} 
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                      <div className="text-center">
+                        <ImageIcon className="h-12 w-12 mx-auto text-muted-foreground mb-2" />
+                        <p className="text-muted-foreground">Preview image coming soon</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
