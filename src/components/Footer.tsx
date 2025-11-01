@@ -35,10 +35,10 @@ const Footer = () => {
           <div>
             <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Categories</h4>
             <ul className="space-y-2 text-sm sm:text-base text-muted-foreground">
-              <li><a href="#" className="hover:text-primary transition-colors">Programming Projects</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Study Materials</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Templates</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Research Papers</a></li>
+              <li><a href="#projects" className="hover:text-primary transition-colors">Projects</a></li>
+              <li><a href="#projects" className="hover:text-primary transition-colors">Notes</a></li>
+              <li><a href="#projects" className="hover:text-primary transition-colors">Presentations</a></li>
+              <li><a href="#projects" className="hover:text-primary transition-colors">Reference Material</a></li>
             </ul>
           </div>
         </div>
