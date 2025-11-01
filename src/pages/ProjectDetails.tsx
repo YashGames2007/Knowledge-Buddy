@@ -336,12 +336,12 @@ const ProjectDetails = () => {
         projectTitle={project.title}
         onRatingSubmitted={() => {
           setShowRatingDialog(false);
-          // Refresh project data to update rating (with small delay to ensure DB is updated)
+          // Refresh project data to update rating (with delay to ensure DB is updated)
           console.log('Scheduling refetch after rating...');
           setTimeout(() => {
             console.log('Refetching project data after rating submission');
             refetch();
-          }, 500);
+          }, 1000);
           toast({
             title: "Thank you!",
             description: "Your rating helps improve our resources.",

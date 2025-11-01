@@ -42,8 +42,10 @@ const RatingDialog = ({
       return;
     }
 
+    console.log('Submitting rating:', selectedRating, 'for project:', projectId);
     setIsSubmitting(true);
     const success = await submitRating(projectId, selectedRating);
+    console.log('Rating submission result:', success);
     
     if (success) {
       toast({
