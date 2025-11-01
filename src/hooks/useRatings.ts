@@ -15,18 +15,24 @@ export const useRatings = () => {
     try {
       const sessionId = getSessionId();
       
-      // Use upsert to handle both insert and update cases
+      // Delete existing rating first (if any) then insert new one
+      // This is required because UPDATE is disabled for security
+      await supabase
+        .from('ratings')
+        .delete()
+        .eq('project_id', projectId)
+        .eq('user_session', sessionId);
+      
+      // Insert the new rating
       const { error } = await supabase
         .from('ratings')
-        .upsert([
+        .insert([
           {
             project_id: projectId,
             user_session: sessionId,
             rating: rating,
           }
-        ], {
-          onConflict: 'project_id,user_session'
-        });
+        ]);
 
       if (error) throw error;
       return true;
