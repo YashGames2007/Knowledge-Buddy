@@ -13,9 +13,12 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
         <div className="mb-6 sm:mb-8">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6 bg-gradient-primary bg-clip-text text-transparent leading-tight">
-            Student Resources Hub
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-2 bg-gradient-primary bg-clip-text text-transparent leading-tight">
+            Knowledge Buddy
           </h1>
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground/80 mb-4 sm:mb-6">
+            Student Resources Hub
+          </p>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
             Premium projects, study materials, and academic resources created by a passionate degree student. 
             Pay what you think it's worth, or download for free.
