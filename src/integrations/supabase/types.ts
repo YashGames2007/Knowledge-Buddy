@@ -116,7 +116,22 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      project_download_stats: {
+        Row: {
+          project_id: string | null
+          total_downloads: number | null
+          unique_downloads: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "downloads_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       [_ in never]: never
