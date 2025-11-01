@@ -66,13 +66,13 @@ const AboutSection = () => {
 
             {/* Contact */}
             <div className="flex gap-3 sm:gap-4 justify-center sm:justify-start">
-              <a href="#" className="p-3 bg-card border border-border rounded-lg hover:bg-secondary transition-colors">
+              <a href="https://github.com/YashGames2007" target="_blank" rel="noopener noreferrer" className="p-3 bg-card border border-border rounded-lg hover:bg-secondary transition-colors">
                 <Github className="h-5 w-5 text-muted-foreground" />
               </a>
-              <a href="#" className="p-3 bg-card border border-border rounded-lg hover:bg-secondary transition-colors">
+              <a href="https://www.linkedin.com/in/yashgames2007/" target="_blank" rel="noopener noreferrer" className="p-3 bg-card border border-border rounded-lg hover:bg-secondary transition-colors">
                 <Linkedin className="h-5 w-5 text-muted-foreground" />
               </a>
-              <a href="#" className="p-3 bg-card border border-border rounded-lg hover:bg-secondary transition-colors">
+              <a href="mailto:yashbhavsar.dev2007@gmail.com" className="p-3 bg-card border border-border rounded-lg hover:bg-secondary transition-colors">
                 <Mail className="h-5 w-5 text-muted-foreground" />
               </a>
             </div>
