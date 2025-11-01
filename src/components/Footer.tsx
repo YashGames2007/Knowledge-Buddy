@@ -24,10 +24,9 @@ const Footer = () => {
           <div>
             <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm sm:text-base text-muted-foreground">
-              <li><a href="#projects" className="hover:text-primary transition-colors">Projects</a></li>
-              <li><a href="#about" className="hover:text-primary transition-colors">About</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Contact</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Blog</a></li>
+              <li><a href="https://yashgames2007-dev-portfolio-web.netlify.app/pages/projects/projects" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Projects</a></li>
+              <li><a href="https://yashgames2007-dev-portfolio-web.netlify.app/pages/about/about" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">About</a></li>
+              <li><a href="mailto:yashbhavsar.dev2007@gmail.com" className="hover:text-primary transition-colors">Contact</a></li>
             </ul>
           </div>
 
