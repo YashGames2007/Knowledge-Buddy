@@ -159,8 +159,8 @@ const ProjectDetails = () => {
     <div className="min-h-screen bg-background">
       {/* Navigation */}
       <div className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <Button variant="ghost" asChild className="mb-0">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" asChild className="mb-0 text-sm sm:text-base">
             <Link to="/" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               Back to Projects
@@ -169,25 +169,25 @@ const ProjectDetails = () => {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Project Header */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className={`p-3 rounded-lg ${categoryColors[project.category]}`}>
-                  <IconComponent className="h-6 w-6" />
+            <div className="space-y-3 sm:space-y-4">
+              <div className="flex items-start gap-2 sm:gap-3">
+                <div className={`p-2 sm:p-3 rounded-lg ${categoryColors[project.category]} flex-shrink-0`}>
+                  <IconComponent className="h-5 w-5 sm:h-6 sm:w-6" />
                 </div>
-                <div>
-                  <Badge variant="secondary" className="mb-2">
+                <div className="flex-1 min-w-0">
+                  <Badge variant="secondary" className="mb-2 text-xs">
                     {project.category.replace("-", " ").toUpperCase()}
                   </Badge>
-                  <h1 className="text-3xl font-bold">{project.title}</h1>
+                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold break-words">{project.title}</h1>
                 </div>
               </div>
               
-              <div className="flex items-center gap-6 text-sm text-muted-foreground">
+              <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-muted-foreground flex-wrap">
                 <div className="flex items-center gap-1">
                   <Star className="h-4 w-4 text-warning fill-current" />
                   <span className="font-medium">{project.rating}</span>
@@ -224,15 +224,15 @@ const ProjectDetails = () => {
             {/* Description */}
             <Card>
               <CardHeader>
-                <CardTitle>About This Resource</CardTitle>
+                <CardTitle className="text-lg sm:text-xl">About This Resource</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground leading-relaxed mb-4">
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
                   {project.description}
                 </p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {project.tags.map((tag) => (
-                    <Badge key={tag} variant="outline">
+                    <Badge key={tag} variant="outline" className="text-xs">
                       {tag}
                     </Badge>
                   ))}
@@ -242,30 +242,30 @@ const ProjectDetails = () => {
           </div>
 
           {/* Sidebar - Contribution Options */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
                   <Heart className="h-5 w-5 text-primary" />
                   Support This Work
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-sm">
                   Choose an amount to contribute and help me create more resources
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 {/* Amount Selection */}
                 <div className="space-y-3">
-                  <label className="text-sm font-medium">Choose contribution amount:</label>
+                  <label className="text-xs sm:text-sm font-medium">Choose contribution amount:</label>
                   <div className="grid grid-cols-2 gap-2">
                     {contributionAmounts.map((amount) => (
                       <button
                         key={amount}
                         onClick={() => setSelectedAmount(amount)}
-                        className={`p-3 rounded-lg border-2 transition-all text-center font-medium ${
+                        className={`p-3 sm:p-4 rounded-lg border-2 transition-all text-center font-medium text-sm sm:text-base touch-manipulation ${
                           selectedAmount === amount
                             ? "border-primary bg-primary/10 text-primary"
-                            : "border-border hover:border-primary/50"
+                            : "border-border hover:border-primary/50 active:border-primary"
                         }`}
                       >
                         {amount} Rs
@@ -277,7 +277,7 @@ const ProjectDetails = () => {
                 {/* Contribute Button */}
                 <Button 
                   variant="contribute" 
-                  className="w-full"
+                  className="w-full text-base sm:text-lg py-5 sm:py-6 touch-manipulation"
                   onClick={() => handleContribute()}
                 >
                   <Heart className="h-4 w-4 mr-2" />
@@ -289,7 +289,7 @@ const ProjectDetails = () => {
                   <Button 
                     variant="ghost" 
                     size="sm" 
-                    className="w-full text-xs text-muted-foreground hover:text-foreground opacity-60 hover:opacity-100"
+                    className="w-full text-xs sm:text-sm text-muted-foreground hover:text-foreground opacity-60 hover:opacity-100 py-4 touch-manipulation"
                     onClick={handleFreeDownload}
                   >
                     Download for free
@@ -301,10 +301,10 @@ const ProjectDetails = () => {
             {/* Additional Info */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">What You'll Get</CardTitle>
+                <CardTitle className="text-base sm:text-lg">What You'll Get</CardTitle>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2 text-sm text-muted-foreground">
+                <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
                   <li className="flex items-center gap-2">
                     <div className="h-1.5 w-1.5 bg-primary rounded-full"></div>
                     Complete source files

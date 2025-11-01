@@ -63,35 +63,35 @@ const ProjectsSection = () => {
   }
 
   return (
-    <section id="projects" className="py-20 px-6 bg-background">
+    <section id="projects" className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 bg-background">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Featured Projects & Resources</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">Featured Projects & Resources</h2>
+          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-2">
             Discover high-quality projects, study materials, and templates created during my academic journey
           </p>
           
           {/* Search Bar */}
-          <div className="relative max-w-md mx-auto mt-8">
+          <div className="relative max-w-md mx-auto mt-6 sm:mt-8">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
             <Input
               type="text"
-              placeholder="Search materials by title or description..."
+              placeholder="Search materials..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
+              className="pl-10 h-12 text-base"
             />
           </div>
         </div>
 
-        <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="mb-8">
-          <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-6">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="project">Project</TabsTrigger>
-            <TabsTrigger value="notes">Notes</TabsTrigger>
-            <TabsTrigger value="misc">Misc</TabsTrigger>
-            <TabsTrigger value="presentation">Presentation</TabsTrigger>
-            <TabsTrigger value="reference-material">Reference Material</TabsTrigger>
+        <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="mb-6 sm:mb-8">
+          <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-3 sm:grid-cols-6 h-auto gap-1 p-1">
+            <TabsTrigger value="all" className="text-xs sm:text-sm py-2">All</TabsTrigger>
+            <TabsTrigger value="project" className="text-xs sm:text-sm py-2">Project</TabsTrigger>
+            <TabsTrigger value="notes" className="text-xs sm:text-sm py-2">Notes</TabsTrigger>
+            <TabsTrigger value="misc" className="text-xs sm:text-sm py-2">Misc</TabsTrigger>
+            <TabsTrigger value="presentation" className="text-xs sm:text-sm py-2">Presentation</TabsTrigger>
+            <TabsTrigger value="reference-material" className="text-xs sm:text-sm py-2 col-span-3 sm:col-span-1">Reference</TabsTrigger>
           </TabsList>
 
           <TabsContent value={selectedCategory} className="mt-8">

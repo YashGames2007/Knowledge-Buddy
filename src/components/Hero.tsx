@@ -11,39 +11,49 @@ const Hero = () => {
       />
       
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-        <div className="mb-8">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6 bg-gradient-primary bg-clip-text text-transparent leading-tight">
             Student Resources Hub
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
             Premium projects, study materials, and academic resources created by a passionate degree student. 
             Pay what you think it's worth, or download for free.
           </p>
         </div>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-          <Button variant="hero" size="lg" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-8 sm:mb-12 w-full px-2 sm:px-0">
+          <Button 
+            variant="hero" 
+            size="lg" 
+            onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+            className="w-full sm:w-auto text-base sm:text-lg py-5 sm:py-6"
+          >
             Explore Projects
           </Button>
-          <Button variant="outline" size="lg" onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}>
+          <Button 
+            variant="outline" 
+            size="lg" 
+            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+            className="w-full sm:w-auto text-base sm:text-lg py-5 sm:py-6"
+          >
             About Me
           </Button>
         </div>
         
         {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-          <div className="bg-card/50 backdrop-blur-sm p-6 rounded-lg border border-border/50">
-            <div className="text-3xl font-bold text-primary mb-2">50+</div>
-            <div className="text-muted-foreground">Projects Available</div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 text-center px-2">
+          <div className="bg-card/50 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-border/50">
+            <div className="text-2xl sm:text-3xl font-bold text-primary mb-1 sm:mb-2">50+</div>
+            <div className="text-sm sm:text-base text-muted-foreground">Projects Available</div>
           </div>
-          <div className="bg-card/50 backdrop-blur-sm p-6 rounded-lg border border-border/50">
-            <div className="text-3xl font-bold text-primary mb-2">1000+</div>
-            <div className="text-muted-foreground">Happy Students</div>
+          <div className="bg-card/50 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-border/50">
+            <div className="text-2xl sm:text-3xl font-bold text-primary mb-1 sm:mb-2">1000+</div>
+            <div className="text-sm sm:text-base text-muted-foreground">Happy Students</div>
           </div>
-          <div className="bg-card/50 backdrop-blur-sm p-6 rounded-lg border border-border/50">
-            <div className="text-3xl font-bold text-primary mb-2">99 Rs</div>
-            <div className="text-muted-foreground">Suggested Contribution</div>
+          <div className="bg-card/50 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-border/50">
+            <div className="text-2xl sm:text-3xl font-bold text-primary mb-1 sm:mb-2">99 Rs</div>
+            <div className="text-sm sm:text-base text-muted-foreground">Suggested Contribution</div>
           </div>
         </div>
       </div>

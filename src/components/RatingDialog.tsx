@@ -71,26 +71,28 @@ const RatingDialog = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md mx-4">
         <DialogHeader>
-          <DialogTitle>Tell us how much the resource helped you</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-lg sm:text-xl">Tell us how much the resource helped you</DialogTitle>
+          <DialogDescription className="text-sm">
             Rate your experience with "{projectTitle}" to help other students.
           </DialogDescription>
         </DialogHeader>
         
-        <div className="flex flex-col items-center space-y-6 py-4">
-          <div className="flex space-x-2">
+        <div className="flex flex-col items-center space-y-4 sm:space-y-6 py-4">
+          <div className="flex space-x-2 sm:space-x-3">
             {[1, 2, 3, 4, 5].map((star) => (
               <button
                 key={star}
                 onClick={() => setSelectedRating(star)}
                 onMouseEnter={() => setHoveredRating(star)}
                 onMouseLeave={() => setHoveredRating(0)}
-                className="transition-transform hover:scale-110"
+                onTouchStart={() => setHoveredRating(star)}
+                onTouchEnd={() => setHoveredRating(0)}
+                className="transition-transform hover:scale-110 active:scale-95 touch-manipulation p-1"
               >
                 <Star
-                  className={`h-8 w-8 ${
+                  className={`h-10 w-10 sm:h-12 sm:w-12 ${
                     star <= (hoveredRating || selectedRating)
                       ? 'fill-warning text-warning'
                       : 'text-muted-foreground'
@@ -101,7 +103,7 @@ const RatingDialog = ({
           </div>
           
           {selectedRating > 0 && (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-foreground text-center">
               {selectedRating === 1 && "Poor - Not helpful"}
               {selectedRating === 2 && "Fair - Somewhat helpful"}
               {selectedRating === 3 && "Good - Helpful"}
@@ -111,18 +113,18 @@ const RatingDialog = ({
           )}
         </div>
 
-        <div className="flex space-x-3">
+        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
           <Button
             variant="outline"
             onClick={handleSkip}
-            className="flex-1"
+            className="flex-1 py-5 sm:py-3 touch-manipulation"
             disabled={isSubmitting}
           >
             Skip
           </Button>
           <Button
             onClick={handleSubmitRating}
-            className="flex-1"
+            className="flex-1 py-5 sm:py-3 touch-manipulation"
             disabled={isSubmitting || selectedRating === 0}
           >
             {isSubmitting ? 'Submitting...' : 'Submit Rating'}
