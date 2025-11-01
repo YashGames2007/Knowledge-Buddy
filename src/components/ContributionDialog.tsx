@@ -43,7 +43,7 @@ const ContributionDialog = ({
           </DialogTitle>
           <DialogDescription className="text-center space-y-2">
             <p className="text-sm text-muted-foreground">
-              Creating "{projectTitle}" took countless hours of hard work and dedication.
+              Creating <span className="font-bold">{projectTitle}</span> took countless hours of hard work and dedication.
             </p>
             <p className="text-sm text-muted-foreground">
               Your contribution helps me continue creating amazing resources for everyone.
@@ -74,7 +74,7 @@ const ContributionDialog = ({
                       : "border-border hover:border-primary/50 hover:bg-primary/5"
                   }`}
                 >
-                  <div className="text-base sm:text-lg font-bold">₹{amount}</div>
+                  <div className="text-base sm:text-lg font-bold">{amount} Rs.</div>
                   <div className="text-xs text-muted-foreground">
                     {amount === 99 && "Buy me a coffee ☕"}
                     {amount === 199 && "Really helpful! 🙌"}
@@ -92,7 +92,7 @@ const ContributionDialog = ({
               onClick={handleContributeClick}
             >
               <Heart className="h-4 sm:h-5 w-4 sm:w-5 mr-2" />
-              Contribute ₹{selectedAmount} & Download
+              Contribute {selectedAmount} Rs. & Download
             </Button>
           </div>
 
