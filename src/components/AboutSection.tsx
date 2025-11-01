@@ -54,8 +54,8 @@ const AboutSection = () => {
               <h4 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Technical Skills</h4>
               <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {[
-                  "React", "TypeScript", "Node.js", "Python", "Java", "MongoDB", 
-                  "PostgreSQL", "AWS", "Docker", "Git", "Machine Learning", "Data Structures"
+                  "Python", "Java", "Data Structures", "Machine Learning", "Game Development", 
+                  "Unity", "Git", "GitHub", "DBMS", "C#", "C/C++"
                 ].map((skill) => (
                   <Badge key={skill} variant="secondary" className="text-xs sm:text-sm">
                     {skill}
