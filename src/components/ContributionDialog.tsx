@@ -101,7 +101,7 @@ const ContributionDialog = ({
             <Button 
               variant="ghost" 
               size="sm" 
-              className="w-full text-xs text-muted-foreground/60 hover:text-muted-foreground opacity-50 hover:opacity-90 py-2"
+              className="w-full text-xs text-muted-foreground/60 hover:text-foreground opacity-50 hover:opacity-90 py-2"
               onClick={handleFreeDownloadClick}
             >
               <Download className="h-3 w-3 mr-2" />
