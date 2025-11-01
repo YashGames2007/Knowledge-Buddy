@@ -1,4 +1,4 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Download, Heart, Star, Code, FileText, BookOpen, ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,7 +8,6 @@ import { useRazorpay } from "@/hooks/useRazorpay";
 import { useState } from "react";
 import { useProjects } from "@/hooks/useProjects";
 import { useDownloads } from "@/hooks/useDownloads";
-import { useAuth } from "@/hooks/useAuth";
 import RatingDialog from "@/components/RatingDialog";
 import ContributionDialog from "@/components/ContributionDialog";
 
@@ -19,11 +18,9 @@ const ProjectDetails = () => {
   const [selectedAmount, setSelectedAmount] = useState(99);
   const [showRatingDialog, setShowRatingDialog] = useState(false);
   const [showContributionDialog, setShowContributionDialog] = useState(false);
-  const navigate = useNavigate();
   
   const { projects, loading, refetch } = useProjects();
   const { recordDownload } = useDownloads();
-  const { user } = useAuth();
 
   const project = projects.find(p => p.id === id);
 
@@ -123,30 +120,10 @@ const ProjectDetails = () => {
   };
 
   const handleActualFreeDownload = async () => {
-    if (!user) {
-      toast({
-        title: "Sign in required",
-        description: "Please sign in to download projects.",
-        variant: "destructive",
-      });
-      navigate('/auth');
-      return;
-    }
-
     if (!project.drive_file_id) return;
     
     // Record the download in database
-    try {
-      await recordDownload(project.id);
-    } catch (error) {
-      toast({
-        title: "Download failed",
-        description: "Please sign in to download projects.",
-        variant: "destructive",
-      });
-      navigate('/auth');
-      return;
-    }
+    await recordDownload(project.id);
     
     // Create hidden anchor element and trigger download from Google Drive
     const downloadUrl = `https://drive.google.com/uc?export=download&id=${project.drive_file_id}`;

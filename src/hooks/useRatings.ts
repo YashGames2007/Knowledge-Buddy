@@ -1,19 +1,26 @@
 import { supabase } from '@/integrations/supabase/client';
 
+// Generate session ID for anonymous tracking
+const getSessionId = () => {
+  let sessionId = localStorage.getItem('user_session_id');
+  if (!sessionId) {
+    sessionId = 'user_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('user_session_id', sessionId);
+  }
+  return sessionId;
+};
+
 export const useRatings = () => {
   const submitRating = async (projectId: string, rating: number) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        throw new Error('You must be signed in to rate projects');
-      }
+      const sessionId = getSessionId();
       
       // Delete existing rating first (if any) then insert new one
       await supabase
         .from('ratings')
         .delete()
         .eq('project_id', projectId)
-        .eq('user_id', user.id);
+        .eq('user_session', sessionId);
       
       // Insert the new rating
       const { error } = await supabase
@@ -21,9 +28,8 @@ export const useRatings = () => {
         .insert([
           {
             project_id: projectId,
-            user_id: user.id,
+            user_session: sessionId,
             rating: rating,
-            user_session: '', // Legacy field, now using user_id
           }
         ]);
 
@@ -37,16 +43,13 @@ export const useRatings = () => {
 
   const getUserRating = async (projectId: string) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        return 0;
-      }
+      const sessionId = getSessionId();
       
       const { data, error } = await supabase
         .from('ratings')
         .select('rating')
         .eq('project_id', projectId)
-        .eq('user_id', user.id)
+        .eq('user_session', sessionId)
         .maybeSingle();
 
       if (error) throw error;
