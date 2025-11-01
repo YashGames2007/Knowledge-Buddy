@@ -18,9 +18,7 @@ const AboutSection = () => {
           {/* About Content */}
           <div className="space-y-4 sm:space-y-6">
             <div className="flex items-center gap-3 mb-4 sm:mb-6">
-              <div className="p-2 sm:p-3 bg-primary/10 rounded-lg">
-                <img src={yashgamesLogo} alt="YashGames2007 Logo" className="h-10 w-10 sm:h-12 sm:w-12 object-contain" />
-              </div>
+              <img src={yashgamesLogo} alt="YashGames2007 Logo" className="h-12 w-12 sm:h-14 sm:w-14 object-cover rounded-full" />
               <div>
                 <h3 className="text-xl sm:text-2xl font-semibold">YashGames2007</h3>
                 <p className="text-sm sm:text-base text-muted-foreground">AI & Data Science Student | Game Developer</p>
