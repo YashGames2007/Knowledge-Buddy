@@ -21,23 +21,34 @@ const AboutSection = () => {
                 <GraduationCap className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h3 className="text-2xl font-semibold">Final Year CS Student</h3>
-                <p className="text-muted-foreground">Specializing in Full-Stack Development & AI</p>
+                <h3 className="text-2xl font-semibold">Yash Bhavsar</h3>
+                <p className="text-muted-foreground">AI & Data Science Student | Game Developer</p>
               </div>
             </div>
 
             <p className="text-muted-foreground leading-relaxed">
-              I'm a passionate computer science student in my final year, dedicated to creating high-quality 
-              educational resources and open-source projects. My journey through academics has led me to 
-              develop comprehensive study materials, innovative projects, and practical templates that I now 
-              share with fellow students and developers.
+              I'm Yash Bhavsar, a passionate student pursuing a Bachelor's Degree in Artificial Intelligence 
+              and Data Science. With a deep interest in Game Development and over 4 years of coding experience, 
+              I've created 20+ projects ranging from educational resources to innovative applications.
             </p>
 
             <p className="text-muted-foreground leading-relaxed">
               Every resource here represents hours of research, coding, and refinement. While I offer 
               everything for free, contributions help me continue creating and sharing valuable content 
-              with the community.
+              with the community. Check out my complete portfolio for more of my work!
             </p>
+
+            <a 
+              href="https://yashgames2007-dev-portfolio-web.netlify.app/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+            >
+              View My Portfolio
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
 
             {/* Skills */}
             <div>
@@ -75,7 +86,7 @@ const AboutSection = () => {
                 <div className="p-3 bg-primary/10 rounded-lg w-fit mx-auto mb-4">
                   <Code className="h-6 w-6 text-primary" />
                 </div>
-                <div className="text-2xl font-bold text-primary mb-2">3+</div>
+                <div className="text-2xl font-bold text-primary mb-2">4+</div>
                 <div className="text-muted-foreground">Years of Coding</div>
               </CardContent>
             </Card>
@@ -85,7 +96,7 @@ const AboutSection = () => {
                 <div className="p-3 bg-accent/10 rounded-lg w-fit mx-auto mb-4">
                   <BookOpen className="h-6 w-6 text-accent" />
                 </div>
-                <div className="text-2xl font-bold text-accent mb-2">50+</div>
+                <div className="text-2xl font-bold text-accent mb-2">20+</div>
                 <div className="text-muted-foreground">Projects Created</div>
               </CardContent>
             </Card>
@@ -93,20 +104,20 @@ const AboutSection = () => {
             <Card className="bg-card border-border/50">
               <CardContent className="p-6 text-center">
                 <div className="p-3 bg-success/10 rounded-lg w-fit mx-auto mb-4">
-                  <Award className="h-6 w-6 text-success" />
+                  <GraduationCap className="h-6 w-6 text-success" />
                 </div>
-                <div className="text-2xl font-bold text-success mb-2">95%</div>
-                <div className="text-muted-foreground">Academic Average</div>
+                <div className="text-2xl font-bold text-success mb-2">AI & DS</div>
+                <div className="text-muted-foreground">Specialization</div>
               </CardContent>
             </Card>
 
             <Card className="bg-card border-border/50">
               <CardContent className="p-6 text-center">
                 <div className="p-3 bg-warning/10 rounded-lg w-fit mx-auto mb-4">
-                  <GraduationCap className="h-6 w-6 text-warning" />
+                  <Award className="h-6 w-6 text-warning" />
                 </div>
-                <div className="text-2xl font-bold text-warning mb-2">2024</div>
-                <div className="text-muted-foreground">Expected Graduation</div>
+                <div className="text-2xl font-bold text-warning mb-2">Game Dev</div>
+                <div className="text-muted-foreground">Core Interest</div>
               </CardContent>
             </Card>
           </div>

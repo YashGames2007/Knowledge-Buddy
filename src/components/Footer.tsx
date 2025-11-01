@@ -16,7 +16,7 @@ const Footer = () => {
               <Heart className="h-4 w-4 text-red-500" />
               <span>and</span>
               <Coffee className="h-4 w-4 text-amber-500" />
-              <span>by a student</span>
+              <span>by YashGames2007</span>
             </div>
           </div>
 
