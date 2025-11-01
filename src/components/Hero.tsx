@@ -13,7 +13,7 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
         <div className="mb-6 sm:mb-8">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-2 bg-gradient-primary bg-clip-text text-transparent leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-2 bg-gradient-primary bg-clip-text text-transparent leading-normal pb-2">
             Knowledge Buddy
           </h1>
           <p className="text-sm sm:text-base md:text-lg text-muted-foreground/80 mb-4 sm:mb-6">
