@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { GraduationCap, Code, BookOpen, Award, Github, Linkedin, Mail } from "lucide-react";
+import { Code, BookOpen, Award, Github, Linkedin, Mail, GraduationCap } from "lucide-react";
+import yashgamesLogo from "@/assets/yashgames-logo.png";
 
 const AboutSection = () => {
   return (
@@ -18,10 +19,10 @@ const AboutSection = () => {
           <div className="space-y-4 sm:space-y-6">
             <div className="flex items-center gap-3 mb-4 sm:mb-6">
               <div className="p-2 sm:p-3 bg-primary/10 rounded-lg">
-                <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                <img src={yashgamesLogo} alt="YashGames2007 Logo" className="h-10 w-10 sm:h-12 sm:w-12 object-contain" />
               </div>
               <div>
-                <h3 className="text-xl sm:text-2xl font-semibold">Yash Bhavsar</h3>
+                <h3 className="text-xl sm:text-2xl font-semibold">YashGames2007</h3>
                 <p className="text-sm sm:text-base text-muted-foreground">AI & Data Science Student | Game Developer</p>
               </div>
             </div>
