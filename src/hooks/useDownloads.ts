@@ -25,6 +25,7 @@ export const useDownloads = () => {
         ]);
 
       if (error) throw error;
+      console.log('Download recorded successfully for project:', projectId);
       return true;
     } catch (err) {
       console.error('Failed to record download:', err);

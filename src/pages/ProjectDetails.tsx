@@ -110,8 +110,12 @@ const ProjectDetails = () => {
     anchor.click();
     document.body.removeChild(anchor);
     
-    // Refresh project data to update download count
-    refetch();
+    // Refresh project data to update download count (with small delay to ensure DB is updated)
+    console.log('Scheduling refetch after paid download...');
+    setTimeout(() => {
+      console.log('Refetching project data after paid download');
+      refetch();
+    }, 500);
   };
 
   const handleFreeDownload = async () => {
@@ -140,8 +144,12 @@ const ProjectDetails = () => {
       description: `Downloading "${project.title}" for free. Thank you for your interest!`,
     });
     
-    // Refresh project data to update download count
-    refetch();
+    // Refresh project data to update download count (with small delay to ensure DB is updated)
+    console.log('Scheduling refetch after download...');
+    setTimeout(() => {
+      console.log('Refetching project data after download');
+      refetch();
+    }, 500);
     
     // Show rating dialog after free download
     setTimeout(() => setShowRatingDialog(true), 1000);
@@ -328,8 +336,12 @@ const ProjectDetails = () => {
         projectTitle={project.title}
         onRatingSubmitted={() => {
           setShowRatingDialog(false);
-          // Refresh project data to update rating
-          refetch();
+          // Refresh project data to update rating (with small delay to ensure DB is updated)
+          console.log('Scheduling refetch after rating...');
+          setTimeout(() => {
+            console.log('Refetching project data after rating submission');
+            refetch();
+          }, 500);
           toast({
             title: "Thank you!",
             description: "Your rating helps improve our resources.",

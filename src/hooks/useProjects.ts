@@ -27,6 +27,7 @@ export const useProjects = () => {
   const fetchProjects = async () => {
     try {
       setLoading(true);
+      console.log('Fetching projects data...');
       
       // Fetch projects
       const { data: projectsData, error: projectsError } = await supabase
@@ -66,6 +67,7 @@ export const useProjects = () => {
         };
       });
 
+      console.log('Projects fetched successfully:', projectsWithStats.length);
       setProjects(projectsWithStats);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch projects');

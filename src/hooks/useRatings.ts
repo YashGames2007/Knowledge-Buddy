@@ -34,6 +34,7 @@ export const useRatings = () => {
         ]);
 
       if (error) throw error;
+      console.log('Rating submitted successfully for project:', projectId, 'Rating:', rating);
       return true;
     } catch (err) {
       console.error('Failed to submit rating:', err);
