@@ -37,12 +37,12 @@ export const useProjects = () => {
 
       if (projectsError) throw projectsError;
 
-      // Fetch download counts for each project
-      const { data: downloadsData, error: downloadsError } = await supabase
-        .from('downloads')
-        .select('project_id');
+      // Fetch unique download counts from the view
+      const { data: downloadStatsData, error: downloadStatsError } = await supabase
+        .from('project_download_stats')
+        .select('project_id, unique_downloads');
 
-      if (downloadsError) throw downloadsError;
+      if (downloadStatsError) throw downloadStatsError;
 
       // Fetch ratings for each project
       const { data: ratingsData, error: ratingsError } = await supabase
@@ -53,7 +53,8 @@ export const useProjects = () => {
 
       // Calculate stats for each project
       const projectsWithStats: ProjectWithStats[] = projectsData.map(project => {
-        const downloadCount = downloadsData.filter(d => d.project_id === project.id).length;
+        const downloadStats = downloadStatsData?.find(d => d.project_id === project.id);
+        const downloadCount = downloadStats?.unique_downloads || 0;
         const projectRatings = ratingsData.filter(r => r.project_id === project.id);
         const rating = projectRatings.length > 0 
           ? projectRatings.reduce((sum, r) => sum + r.rating, 0) / projectRatings.length 
