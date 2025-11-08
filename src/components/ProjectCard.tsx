@@ -70,7 +70,7 @@ const ProjectCard = ({
         <CardTitle className="text-xl group-hover:text-primary transition-colors">
           {title}
         </CardTitle>
-        <CardDescription className="text-muted-foreground">
+        <CardDescription className="text-muted-foreground line-clamp-3">
           {description}
         </CardDescription>
       </CardHeader>
