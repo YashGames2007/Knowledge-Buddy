@@ -16,7 +16,7 @@ const Footer = () => {
               <Heart className="h-3 w-3 sm:h-4 sm:w-4 text-red-500" />
               <span>and</span>
               <Coffee className="h-3 w-3 sm:h-4 sm:w-4 text-amber-500" />
-              <a href="https://yashgames2007-dev-portfolio-web.netlify.app/" target="_blank" rel="noopener noreferrer" className="no-underline hover:text-primary transition-colors">YashGames2007</a>
+              <a href="https://yashgames2007-dev-portfolio-web.netlify.app/" target="_blank" rel="noopener noreferrer" className="no-underline hover:text-primary transition-colors">by YashGames2007</a>
             </div>
           </div>
 
