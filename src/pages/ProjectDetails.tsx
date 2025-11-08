@@ -315,11 +315,11 @@ const ProjectDetails = () => {
                   </li>
                   <li className="flex items-center gap-2">
                     <div className="h-1.5 w-1.5 bg-primary rounded-full"></div>
-                    Lifetime access & updates
+                    Quality Study Materials
                   </li>
                   <li className="flex items-center gap-2">
                     <div className="h-1.5 w-1.5 bg-primary rounded-full"></div>
-                    Commercial use allowed
+                    Handwritten Notes
                   </li>
                 </ul>
               </CardContent>
