@@ -10,6 +10,7 @@ import { useProjects } from "@/hooks/useProjects";
 import { useDownloads } from "@/hooks/useDownloads";
 import RatingDialog from "@/components/RatingDialog";
 import ContributionDialog from "@/components/ContributionDialog";
+import Footer from "@/components/Footer";
 
 const ProjectDetails = () => {
   const { id } = useParams();
@@ -357,6 +358,9 @@ const ProjectDetails = () => {
         onFreeDownload={handleActualFreeDownload}
         projectTitle={project.title}
       />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

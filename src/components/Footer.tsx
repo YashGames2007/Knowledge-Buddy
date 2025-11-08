@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {/* Brand */}
           <div>
-            <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-primary">Student Resources Hub</h3>
+            <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-primary">Knowledge Buddy</h3>
             <p className="text-sm sm:text-base text-muted-foreground mb-3 sm:mb-4">
               Quality educational resources and projects by a passionate CS student.
             </p>
@@ -44,7 +44,7 @@ const Footer = () => {
 
         <div className="border-t border-border mt-6 sm:mt-8 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-0">
           <div className="text-muted-foreground text-xs sm:text-sm text-center md:text-left">
-            © 2024 Student Resources Hub. All rights reserved.
+            © 2024 Knowledge Buddy. All rights reserved.
           </div>
           <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
             <Code className="h-3 w-3 sm:h-4 sm:w-4" />
