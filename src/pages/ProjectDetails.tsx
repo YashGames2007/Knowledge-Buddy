@@ -228,7 +228,7 @@ const ProjectDetails = () => {
                 <CardTitle className="text-lg sm:text-xl">About This Resource</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4 whitespace-pre-line">
                   {project.description}
                 </p>
                 <div className="flex flex-wrap gap-1.5 sm:gap-2">
